@@ -1,0 +1,28 @@
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  labels:
+    app.kubernetes.io/part-of: store
+    apps.tanzu.vmware.com/workload-type: web
+  name: store
+spec:
+  build:
+    env:
+    - name: BP_JVM_VERSION
+      value: "17"
+  params:
+  - name: annotations
+    value:
+      autoscaling.knative.dev/minScale: "1"
+  source:
+    git:
+      ref:
+        branch: main
+      url: https://github.com/th3n3rd/tap-recipe-monolith-to-microservice.git
+    subPath: store
+  serviceClaims:
+    - name: db
+      ref:
+        apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+        kind: ClassClaim
+        name: store-db
