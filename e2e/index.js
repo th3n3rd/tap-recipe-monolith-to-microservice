@@ -18,6 +18,7 @@ configure({
     await containsText(document, /The Tractor Store/);
     await displaysProductModel(document, "Eicher Diesel 215/16");
     await displaysStandardProductImage(document, "Eicher Diesel 215/16");
+    await displayProductPrice(document, "$58")
     await switchToPlatinumEdition(document);
     await displaysPlatinumProductImage(document, "Eicher Diesel 215/16");
 
@@ -51,4 +52,8 @@ async function displaysStandardProductImage(document, product) {
 
 async function displaysPlatinumProductImage(document, product) {
     await queries.findByAltText(document, new RegExp(`^The platinum edition version of the ${product}`));
+}
+
+async function displayProductPrice(document, price) {
+    await queries.findByText(document, new RegExp(`Buy for \\${price}`));
 }

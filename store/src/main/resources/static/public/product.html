@@ -16,6 +16,7 @@
                  th:alt="|Preview of the platinum edition version of the ${product.model} tractor|"
                  th:src="${product.platinumImageUrl}"/>
         </label>
+        <div th:data-hx-get="|/pricing/${product.id}|" data-hx-trigger="load" data-hx-target="this"></div>
     </div>
 </div>
 <script>
