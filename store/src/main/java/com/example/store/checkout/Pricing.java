@@ -2,6 +2,7 @@ package com.example.store.checkout;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
@@ -11,5 +12,5 @@ class Pricing {
     private Long id;
 
     private String productId;
-    private String price;
+    private BigDecimal price;
 }

@@ -15,7 +15,8 @@ html::after {
   left: 7px;
 }
 
-.checkout-buy {
+.checkout-buy,
+.checkout-minicart {
   position: relative;
   outline: 3px solid #5f9dc8;
 }
@@ -24,7 +25,8 @@ html::after {
   outline-offset: 5px;
 }
 
-.checkout-buy::before {
+.checkout-buy::before,
+.checkout-minicart::before {
   display: block;
   background-color: #5f9dc8;
   color: white;
@@ -32,8 +34,18 @@ html::after {
   padding: 2px 5px;
 }
 
+.checkout-minicart::before {
+  content: "Checkout";
+}
+
 .checkout-buy::before {
   content: "Checkout";
   bottom: -34px;
   right: -8px;
 }
+
+.checkout-minicart::before {
+  bottom: -30px;
+  right: -3px;
+}
+

@@ -1,3 +1,11 @@
 <div class="checkout-buy">
-    <p th:text="|Buy for $${pricing.price}|"></p>
+    <form>
+        <input type="hidden" name="productId" th:value="${pricing.productId}">
+        <button
+            th:text="|Buy for $${pricing.price}|"
+            data-hx-post="/cart"
+            data-hx-trigger="click"
+            type="button"
+        ></button>
+    </form>
 </div>

@@ -18,5 +18,12 @@
         data-hx-get="/products/eicher"
         data-hx-target="this"
     >Loading...</div>
+    <div class="checkout_summary">
+        <div
+            data-hx-trigger="load delay:1s, update-cart from:body"
+            data-hx-get="/cart"
+            data-hx-target="this"
+        >Loading...</div>
+    </div>
 </body>
 </html>

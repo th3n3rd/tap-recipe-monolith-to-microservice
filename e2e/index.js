@@ -18,7 +18,13 @@ configure({
     await containsText(document, /The Tractor Store/);
     await displaysProductModel(document, "Eicher Diesel 215/16");
     await displaysStandardProductImage(document, "Eicher Diesel 215/16");
-    await displayProductPrice(document, "$58")
+    await displayProductPrice(document, "$58");
+    await shoppingCartIsEmpty(document);
+    await buyProduct(document);
+    await shoppingCartContains(document, 1);
+    await buyProduct(document);
+    await shoppingCartContains(document, 2);
+    await shoppingCartTotals(document, "$116")
     await switchToPlatinumEdition(document);
     await displaysPlatinumProductImage(document, "Eicher Diesel 215/16");
 
@@ -56,4 +62,21 @@ async function displaysPlatinumProductImage(document, product) {
 
 async function displayProductPrice(document, price) {
     await queries.findByText(document, new RegExp(`Buy for \\${price}`));
+}
+
+async function buyProduct(document) {
+    const buy = await queries.findByRole(document, "button", { name: /Buy for/ });
+    await buy.click();
+}
+
+async function shoppingCartContains(document, numberOfElements) {
+    await queries.findByText(document, new RegExp(`You've picked ${numberOfElements} items`))
+}
+
+async function shoppingCartIsEmpty(document) {
+    await queries.findByText(document, new RegExp(`Your cart is empty`))
+}
+
+async function shoppingCartTotals(document, total) {
+    await queries.findByText(document, new RegExp(`for a total of \\${total}`))
 }
