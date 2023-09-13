@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 interface PricingBook extends JpaRepository<Pricing, Long> {
-    Optional<Pricing> findByProductId(String productId);
+    Optional<Pricing> findByProductIdAndEdition(String productId, String edition);
 }

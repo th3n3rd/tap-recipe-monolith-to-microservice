@@ -19,14 +19,20 @@ configure({
     await displaysProductModel(document, "Eicher Diesel 215/16");
     await displaysStandardProductImage(document, "Eicher Diesel 215/16");
     await displayProductPrice(document, "$58");
+
     await shoppingCartIsEmpty(document);
     await buyProduct(document);
     await shoppingCartContains(document, 1);
     await buyProduct(document);
     await shoppingCartContains(document, 2);
     await shoppingCartTotals(document, "$116")
+
     await switchToPlatinumEdition(document);
     await displaysPlatinumProductImage(document, "Eicher Diesel 215/16");
+    await displayProductPrice(document, "$958");
+    await buyProduct(document);
+    await shoppingCartContains(document, 3);
+    await shoppingCartTotals(document, "$1074")
 
     await browser.close();
 })();

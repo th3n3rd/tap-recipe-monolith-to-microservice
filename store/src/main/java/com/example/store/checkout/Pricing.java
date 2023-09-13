@@ -12,5 +12,6 @@ class Pricing {
     private Long id;
 
     private String productId;
+    private String edition;
     private BigDecimal price;
 }

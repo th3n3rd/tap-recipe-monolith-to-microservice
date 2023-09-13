@@ -21,6 +21,10 @@
                  alt="Preview of the platinum edition version of the {{product.model}} tractor"
                  src="{{product.platinumImageUrl}}"/>
         </label>
-        <div data-hx-get="/pricing/{{product.id}}" data-hx-trigger="load" data-hx-target="this"></div>
+        <div
+            data-hx-get="/pricing/{{product.id}}"
+            data-hx-vals='{ "edition": "{{edition}}" }'
+            data-hx-trigger="load"
+            data-hx-target="this"></div>
     </div>
 </div>

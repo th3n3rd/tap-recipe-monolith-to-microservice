@@ -17,7 +17,7 @@ class ShoppingCartApis {
 
     @PostMapping(value = "/cart")
     ResponseEntity<?> addItem(@ModelAttribute AddItem addItem) {
-        var pricing = pricingBook.findByProductId(addItem.productId()).orElseThrow();
+        var pricing = pricingBook.findByProductIdAndEdition(addItem.productId(), addItem.edition()).orElseThrow();
         shoppingCart.add(new ShoppingCart.Item(pricing.getProductId(), pricing.getPrice()));
         return ResponseEntity
             .noContent()
@@ -31,5 +31,5 @@ class ShoppingCartApis {
         return "checkout-minicart";
     }
 
-    record AddItem(String productId) {}
+    record AddItem(String productId, String edition) {}
 }

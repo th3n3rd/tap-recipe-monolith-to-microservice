@@ -5,6 +5,6 @@ create table pricing
     price decimal(10, 2) not null
 );
 
-insert into pricing(id, product_id, price) values (1, 'eicher', 58.00);
-insert into pricing(id, product_id, price) values (3, 'fendt', 54.00);
-insert into pricing(id, product_id, price) values (5, 'porsche', 66.00);
+insert into pricing(product_id, price) values ('eicher', 58.00);
+insert into pricing(product_id, price) values ('fendt', 54.00);
+insert into pricing(product_id, price) values ('porsche', 66.00);
