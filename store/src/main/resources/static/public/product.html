@@ -3,14 +3,18 @@
         <h2 th:text="${product.model}" class="product_headline"></h2>
         <img
             class="product_image"
-            th:alt="|The standard edition version of the ${product.model} tractor|"
-            th:src="${product.imageUrl}"
+            th:alt="|The ${edition} edition version of the ${product.model} tractor|"
+            th:src="${product.imageUrlFor(edition)}"
         />
     </div>
     <div class="product_details">
         <label class="product_editions">
             <p>Material Upgrade?</p>
-            <input type="checkbox" name="edition"/>
+            <input
+                th:data-hx-get="|/products/${product.id}/${'platinum'.equals(edition) ? 'standard' : 'platinum'}|"
+                th:checked="${'platinum'.equals(edition)}"
+                data-hx-target=".product_container"
+                type="checkbox"/>
             <span aria-label="Platinum Edition">Platinum<br/>Edition</span>
             <img class="product_image_platinum"
                  th:alt="|Preview of the platinum edition version of the ${product.model} tractor|"
@@ -19,17 +23,3 @@
         <div th:data-hx-get="|/pricing/${product.id}|" data-hx-trigger="load" data-hx-target="this"></div>
     </div>
 </div>
-<script>
-    (function() {
-        const platinum = document.querySelector(".product_editions input");
-        const productImage = document.querySelector(".product_image");
-        const standardImageUrl = productImage.src;
-        const platinumImageUrl = document.querySelector(".product_image_platinum").src;
-
-        platinum.addEventListener("change", e => {
-            let isPlatinum = e.target.checked;
-            productImage.src = isPlatinum ? platinumImageUrl : standardImageUrl;
-            productImage.alt = productImage.alt.replace(/(standard|platinum)/, isPlatinum ? "platinum" : "standard");
-        });
-    })();
-</script>

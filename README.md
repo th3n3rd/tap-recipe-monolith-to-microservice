@@ -11,4 +11,5 @@ of a monolithic application into a microservice.
     - [x] Present the price of a product
     - [x] Put one or more products into the shopping cart
     - [ ] Different price for platinum editions
+    - [ ] Empty the shopping cart
 - [ ] Port the recommendations capability of the [Tractor Store](https://the-tractor.store/)

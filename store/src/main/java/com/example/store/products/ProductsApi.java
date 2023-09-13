@@ -12,9 +12,10 @@ class ProductsApi {
 
     private final ProductsCatalogue productsCatalogue;
 
-    @GetMapping("/products/{productId}")
-    String productDetails(@PathVariable String productId, Model model) {
+    @GetMapping("/products/{productId}/{edition}")
+    String productDetails(@PathVariable String productId, @PathVariable String edition, Model model) {
         model.addAttribute("product", productsCatalogue.findById(productId).orElseThrow());
+        model.addAttribute("edition", edition);
         return "product";
     }
 
