@@ -42,6 +42,20 @@ configure({
     await shoppingCartTotals(document, "$958");
     await emptyShoppingCart(document);
 
+    await displaysRecommendations(document, [
+        "Fendt F20 Dieselroß",
+        "Porsche-Diesel Master 419"
+    ]);
+
+    await selectRecommendedProduct(document, "Porsche-Diesel Master 419")
+    await displaysProductModel(document, "Porsche-Diesel Master 419");
+    await displaysStandardProductImage(document, "Porsche-Diesel Master 419");
+    await displayProductPrice(document, "$66");
+    await displaysRecommendations(document, [
+        "Fendt F20 Dieselroß",
+        "Eicher Diesel 215/16"
+    ]);
+
     await browser.close();
 })();
 
@@ -98,4 +112,16 @@ async function shoppingCartTotals(document, total) {
 async function emptyShoppingCart(document) {
     const emptyCart = await queries.findByRole(document, "button", { name: /Empty cart/ })
     await emptyCart.click();
+}
+
+async function displaysRecommendations(document, products) {
+    const recommendations = await queries.findByRole(document, "region", { name: /Recommendations/ });
+    for (const product of products) {
+        await queries.findByAltText(recommendations, new RegExp(`^A recommendation for the standard edition version of the ${product}`));
+    }
+}
+
+async function selectRecommendedProduct(document, product) {
+    const recommendation = await queries.findByAltText(document, new RegExp(`^A recommendation for the standard edition version of the ${product}`));
+    await recommendation.click();
 }

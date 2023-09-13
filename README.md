@@ -12,4 +12,4 @@ of a monolithic application into a microservice.
     - [x] Put one or more products into the shopping cart
     - [x] Different price for platinum editions
     - [x] Empty the shopping cart
-- [ ] Port the recommendations capability of the [Tractor Store](https://the-tractor.store/)
+- [x] Port the recommendations capability of the [Tractor Store](https://the-tractor.store/)

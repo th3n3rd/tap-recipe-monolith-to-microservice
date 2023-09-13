@@ -1,0 +1,13 @@
+<aside class="recommendations" role="region" aria-label="Recommendations">
+    <h2 class="recommendations-headline">Recommendations</h2>
+    {{#products}}
+    <div class="recommendation">
+        <div
+           data-hx-get="/products/{{id}}"
+           data-hx-trigger="click"
+           data-hx-target=".product"
+           data-hx-swap="outerHTML"
+        ><img alt="A recommendation for the standard edition version of the {{model}} tractor" src="{{imageUrl}}" /></div>
+    </div>
+    {{/products}}
+</aside>

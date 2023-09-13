@@ -30,7 +30,8 @@ a {
 
 .product {
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 3fr 2fr 2fr;
+  grid-column-gap: 2rem;
   justify-content: space-between;
   min-width: 42rem;
   max-width: 55rem;
@@ -145,4 +146,25 @@ a {
 .checkout-clear button:active {
   background: gray;
   transform: scale(0.98);
+}
+
+.recommendations-headline {
+  padding-top: 1em;
+  font-size: 1em;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.recommendation div {
+  display: inline-block;
+  margin: 1rem;
+  border: 1px solid #333;
+  cursor: pointer;
+}
+
+.recommendation img {
+  max-width: 100%;
+  width: 300px;
 }
