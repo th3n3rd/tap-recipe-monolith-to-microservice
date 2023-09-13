@@ -11,9 +11,10 @@
         <label class="product_editions">
             <p>Material Upgrade?</p>
             <input
-                th:data-hx-get="|/products/${product.id}/${'platinum'.equals(edition) ? 'standard' : 'platinum'}|"
-                th:checked="${'platinum'.equals(edition)}"
+                th:data-hx-get="|/products/${product.id}|"
+                th:data-hx-vals='|{ "edition": "${"platinum".equals(edition) ? "standard" : "platinum"}" }|'
                 data-hx-target=".product_container"
+                th:checked="${'platinum'.equals(edition)}"
                 type="checkbox"/>
             <span aria-label="Platinum Edition">Platinum<br/>Edition</span>
             <img class="product_image_platinum"
