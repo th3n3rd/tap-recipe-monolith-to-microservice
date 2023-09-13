@@ -1,0 +1,8 @@
+<div class="checkout-minicart">
+    {{#cart.isEmpty}}
+    <p>Your cart is empty</p>
+    {{/cart.isEmpty}}
+    {{^cart.isEmpty}}
+    <p>You've picked {{cart.size}} items, for a total of ${{cart.total}}</p>
+    {{/cart.isEmpty}}
+</div>

@@ -19,8 +19,4 @@ class Product {
     private String model;
     private String imageUrl;
     private String platinumImageUrl;
-
-    public String imageUrlFor(String edition) {
-        return "platinum".equals(edition) ? platinumImageUrl : imageUrl;
-    }
 }

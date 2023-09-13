@@ -1,4 +1,0 @@
-<div class="checkout-minicart">
-    <p th:if="${cart.isEmpty()}">Your cart is empty</p>
-    <p th:if="${!cart.isEmpty()}" th:text="|You've picked ${cart.size()} items, for a total of $${cart.total()}|"></p>
-</div>

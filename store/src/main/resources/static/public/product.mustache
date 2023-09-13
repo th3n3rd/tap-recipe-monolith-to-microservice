@@ -1,0 +1,26 @@
+<div class="product">
+    <div class="product_header">
+        <h2 class="product_headline">{{product.model}}</h2>
+        <img
+            class="product_image"
+            alt="The {{edition}} edition version of the {{product.model}} tractor"
+            src="{{imageUrl}}"
+        />
+    </div>
+    <div class="product_details">
+        <label class="product_editions">
+            <p>Material Upgrade?</p>
+            <input
+                data-hx-get="/products/{{product.id}}"
+                data-hx-vals='{ "edition": "{{editionToggle}}" }'
+                data-hx-target=".product_container"
+                {{#isPlatinum}}checked{{/isPlatinum}}
+                type="checkbox"/>
+            <span aria-label="Platinum Edition">Platinum<br/>Edition</span>
+            <img class="product_image_platinum"
+                 alt="Preview of the platinum edition version of the {{product.model}} tractor"
+                 src="{{product.platinumImageUrl}}"/>
+        </label>
+        <div data-hx-get="/pricing/{{product.id}}" data-hx-trigger="load" data-hx-target="this"></div>
+    </div>
+</div>

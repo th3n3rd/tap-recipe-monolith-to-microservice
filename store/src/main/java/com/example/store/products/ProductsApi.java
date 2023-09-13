@@ -15,8 +15,13 @@ class ProductsApi {
 
     @GetMapping("/products/{productId}")
     String productDetails(@PathVariable String productId, @RequestParam(defaultValue = "standard") String edition, Model model) {
-        model.addAttribute("product", productsCatalogue.findById(productId).orElseThrow());
+        var product = productsCatalogue.findById(productId).orElseThrow();
+        var isPlatinum = "platinum".equals(edition);
+        model.addAttribute("product", product);
+        model.addAttribute("imageUrl", isPlatinum ? product.getPlatinumImageUrl() : product.getImageUrl());
+        model.addAttribute("isPlatinum", isPlatinum);
         model.addAttribute("edition", edition);
+        model.addAttribute("editionToggle", isPlatinum ? "standard" : "platinum");
         return "product";
     }
 

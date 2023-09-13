@@ -9,7 +9,9 @@
     <link href="/assets/store.css" rel="stylesheet"/>
     <link href="/assets/outlines.css" rel="stylesheet"/>
     <script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
-    <script th:if="${@environment.acceptsProfiles('default')}" src="http://localhost:35729/livereload.js"></script>
+    {{#liveReload}}
+    <script src="http://localhost:35729/livereload.js"></script>
+    {{/liveReload}}
 </head>
 <body class="store_layout">
     <h1 class="store_header">The Tractor Store</h1>
