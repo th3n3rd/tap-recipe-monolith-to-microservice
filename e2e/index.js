@@ -25,14 +25,22 @@ configure({
     await shoppingCartContains(document, 1);
     await buyProduct(document);
     await shoppingCartContains(document, 2);
-    await shoppingCartTotals(document, "$116")
+    await shoppingCartTotals(document, "$116");
 
     await switchToPlatinumEdition(document);
     await displaysPlatinumProductImage(document, "Eicher Diesel 215/16");
     await displayProductPrice(document, "$958");
     await buyProduct(document);
     await shoppingCartContains(document, 3);
-    await shoppingCartTotals(document, "$1074")
+    await shoppingCartTotals(document, "$1074");
+
+    await emptyShoppingCart(document);
+    await shoppingCartIsEmpty(document);
+
+    await buyProduct(document);
+    await shoppingCartContains(document, 1);
+    await shoppingCartTotals(document, "$958");
+    await emptyShoppingCart(document);
 
     await browser.close();
 })();
@@ -85,4 +93,9 @@ async function shoppingCartIsEmpty(document) {
 
 async function shoppingCartTotals(document, total) {
     await queries.findByText(document, new RegExp(`for a total of \\${total}`))
+}
+
+async function emptyShoppingCart(document) {
+    const emptyCart = await queries.findByRole(document, "button", { name: /Empty cart/ })
+    await emptyCart.click();
 }

@@ -109,7 +109,10 @@ a {
 }
 
 .checkout-minicart {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
   text-align: center;
 }
 
@@ -118,4 +121,25 @@ a {
   height: 80px;
   display: inline-block;
   vertical-align: middle;
+}
+
+.checkout-clear button {
+  padding: 0.4em;
+  font-size: 1.2em;
+  border: none;
+  color: white;
+  border-radius: 0.25em;
+  background: rgba(151, 48, 48, 0.8);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+}
+
+.checkout-clear button:hover {
+  background: rgba(174, 56, 56, 0.8);
+}
+
+.checkout-clear button:active {
+  background: gray;
+  transform: scale(0.98);
 }

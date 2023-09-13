@@ -4,5 +4,12 @@
     {{/cart.isEmpty}}
     {{^cart.isEmpty}}
     <p>You've picked {{cart.size}} items, for a total of ${{cart.total}}</p>
+    <form class="checkout-clear">
+        <button
+            data-hx-delete="/cart"
+            data-hx-trigger="click"
+            type="button"
+        >Empty cart</button>
+    </form>
     {{/cart.isEmpty}}
 </div>

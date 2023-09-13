@@ -1,5 +1,7 @@
 package com.example.store.checkout;
 
+import static java.math.BigDecimal.ZERO;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 class ShoppingCart {
     private final List<Item> items = new ArrayList<>();
-    private BigDecimal total = BigDecimal.ZERO;
+    private BigDecimal total = ZERO;
 
     void add(Item item) {
         items.add(item);
@@ -25,6 +27,11 @@ class ShoppingCart {
 
     public BigDecimal total() {
         return total;
+    }
+
+    public void empty() {
+        items.clear();
+        total = ZERO;
     }
 
     record Item(String productId, BigDecimal price) {}
