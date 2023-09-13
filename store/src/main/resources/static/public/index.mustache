@@ -13,14 +13,14 @@
     <script src="http://localhost:35729/livereload.js"></script>
     {{/liveReload}}
 </head>
-<body class="store_layout">
-    <h1 class="store_header">The Tractor Store</h1>
-    <div class="product_container"
+<body class="store-layout">
+    <h1 class="store-header">The Tractor Store</h1>
+    <div class="product-container"
         data-hx-trigger="load delay:1s"
         data-hx-get="/products/eicher"
         data-hx-target="this"
     >Loading...</div>
-    <div class="checkout_summary">
+    <div class="checkout-summary">
         <div
             data-hx-trigger="load delay:1s, cart-updated from:body"
             data-hx-get="/cart"
