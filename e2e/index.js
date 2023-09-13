@@ -1,5 +1,20 @@
 import puppeteer from "puppeteer";
-import {getDocument, queries, configure} from "pptr-testing-library";
+import { configure, getDocument } from "pptr-testing-library";
+import {
+    buyProduct,
+    containsText,
+    displayProductPrice,
+    displaysPlatinumProductImage,
+    displaysProductModel,
+    displaysRecommendations,
+    displaysStandardProductImage,
+    emptyShoppingCart,
+    selectRecommendedProduct,
+    shoppingCartContains,
+    shoppingCartIsEmpty,
+    shoppingCartTotals,
+    switchToPlatinumEdition
+} from "./dsl.js";
 
 const url = process.argv[2];
 if (!url) {
@@ -67,61 +82,3 @@ async function openWebapp(pageUrl) {
     return { browser, document }
 }
 
-async function containsText(document, text) {
-    await queries.findByText(document, text, {});
-}
-
-async function displaysProductModel(document, model) {
-    return containsText(document, model);
-}
-
-async function switchToPlatinumEdition(document) {
-    const checkbox = await queries.findByLabelText(document, /Platinum Edition/);
-    await checkbox.click();
-}
-
-async function displaysStandardProductImage(document, product) {
-    await queries.findByAltText(document, new RegExp(`^The standard edition version of the ${product}`));
-}
-
-async function displaysPlatinumProductImage(document, product) {
-    await queries.findByAltText(document, new RegExp(`^The platinum edition version of the ${product}`));
-}
-
-async function displayProductPrice(document, price) {
-    await queries.findByText(document, new RegExp(`Buy for \\${price}`));
-}
-
-async function buyProduct(document) {
-    const buy = await queries.findByRole(document, "button", { name: /Buy for/ });
-    await buy.click();
-}
-
-async function shoppingCartContains(document, numberOfElements) {
-    await queries.findByText(document, new RegExp(`You've picked ${numberOfElements} items`))
-}
-
-async function shoppingCartIsEmpty(document) {
-    await queries.findByText(document, new RegExp(`Your cart is empty`))
-}
-
-async function shoppingCartTotals(document, total) {
-    await queries.findByText(document, new RegExp(`for a total of \\${total}`))
-}
-
-async function emptyShoppingCart(document) {
-    const emptyCart = await queries.findByRole(document, "button", { name: /Empty cart/ })
-    await emptyCart.click();
-}
-
-async function displaysRecommendations(document, products) {
-    const recommendations = await queries.findByRole(document, "region", { name: /Recommendations/ });
-    for (const product of products) {
-        await queries.findByAltText(recommendations, new RegExp(`^A recommendation for the standard edition version of the ${product}`));
-    }
-}
-
-async function selectRecommendedProduct(document, product) {
-    const recommendation = await queries.findByAltText(document, new RegExp(`^A recommendation for the standard edition version of the ${product}`));
-    await recommendation.click();
-}
