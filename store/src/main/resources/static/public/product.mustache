@@ -13,7 +13,8 @@
             <input
                 data-hx-get="/products/{{details.productId}}"
                 data-hx-vals='{ "edition": "{{details.otherEdition}}" }'
-                data-hx-target=".product-container"
+                data-hx-target=".product"
+                data-hx-swap="outerHTML"
                 {{#details.isPlatinum}}checked{{/details.isPlatinum}}
                 type="checkbox"/>
             <span aria-label="Platinum Edition">Platinum<br/>Edition</span>
