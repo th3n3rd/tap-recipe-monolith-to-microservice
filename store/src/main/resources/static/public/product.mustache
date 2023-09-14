@@ -23,12 +23,14 @@
                  src="{{details.platinumImageUrl}}"/>
         </label>
         <div
+            class="checkout-buy-placeholder"
             data-hx-get="/pricing/{{details.productId}}"
             data-hx-vals='{ "edition": "{{details.edition}}" }'
             data-hx-trigger="load"
             data-hx-target="this"></div>
     </div>
     <div
+        class="recommendations-placeholder"
         data-hx-get="/recommendations/{{details.productId}}"
         data-hx-trigger="load"
         data-hx-target="this"></div>

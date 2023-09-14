@@ -18,11 +18,13 @@
 <body class="store-layout">
     <h1 class="store-header">The Tractor Store</h1>
     <div
+        class="product-placeholder"
         data-hx-trigger="load delay:1s"
         data-hx-get="/products/eicher"
         data-hx-target="this"
     >Loading...</div>
     <div
+        class="checkout-summary-placeholder"
         data-hx-trigger="load delay:1s, cart-updated from:body"
         data-hx-get="/cart"
         data-hx-target="this"
