@@ -1,4 +1,4 @@
-<div class="product">
+<aside class="product">
     <div class="product-header">
         <h2 class="product-headline">{{details.model}}</h2>
         <img
@@ -26,12 +26,14 @@
             class="checkout-buy-placeholder"
             data-hx-get="/pricing/{{details.productId}}"
             data-hx-vals='{ "edition": "{{details.edition}}" }'
-            data-hx-trigger="load"
-            data-hx-target="this"></div>
+            data-hx-trigger="load delay:1s"
+            data-hx-target="this"
+        >{{> spinner}}</div>
     </div>
     <div
         class="recommendations-placeholder"
         data-hx-get="/recommendations/{{details.productId}}"
-        data-hx-trigger="load"
-        data-hx-target="this"></div>
-</div>
+        data-hx-trigger="load delay:1s"
+        data-hx-target="this"
+    >{{> spinner}}</div>
+</aside>
