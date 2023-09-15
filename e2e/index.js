@@ -28,7 +28,9 @@ configure({
 });
 
 (async () => {
-    const { browser, document } = await openWebapp(url);
+    const { browser, tab } = await openWebBrowser();
+
+    let document = await visitPage(tab, url);
 
     await containsText(document, /The Tractor Store/);
     await displaysProductModel(document, "Eicher Diesel 215/16");
@@ -71,14 +73,21 @@ configure({
         "Eicher Diesel 215/16"
     ]);
 
+    document = await visitPage(tab, `${url}/products/fendt?edition=platinum`)
+    await displaysProductModel(document, "Fendt F20 Dieselroß");
+    await displaysPlatinumProductImage(document, "Fendt F20 Dieselroß");
+
     await browser.close();
 })();
 
-async function openWebapp(pageUrl) {
+async function openWebBrowser() {
     const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
-    await page.goto(pageUrl);
-    const document = await getDocument(page);
-    return { browser, document }
+    const tab = await browser.newPage();
+    return { browser, tab }
+}
+
+async function visitPage(currentTab, newUrl) {
+    await currentTab.goto(newUrl);
+    return await getDocument(currentTab);
 }
 

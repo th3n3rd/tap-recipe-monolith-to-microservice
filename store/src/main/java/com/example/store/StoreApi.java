@@ -8,7 +8,7 @@ class StoreApi {
 
     @GetMapping("/")
     String index() {
-        return "index";
+        return "redirect:/products/eicher";
     }
 
 }

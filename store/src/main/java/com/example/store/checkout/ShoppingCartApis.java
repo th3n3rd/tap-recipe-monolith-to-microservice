@@ -29,7 +29,7 @@ class ShoppingCartApis {
         return cartUpdatedEvent();
     }
 
-    @GetMapping("/cart")
+    @GetMapping(value = "/cart", produces = "text/fragment+html")
     String listItems(Model model) {
         model.addAttribute("cart", shoppingCart);
         return "checkout-minicart";

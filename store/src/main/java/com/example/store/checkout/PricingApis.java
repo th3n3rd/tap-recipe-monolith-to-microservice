@@ -13,7 +13,7 @@ class PricingApis {
 
     private final PricingBook pricingBook;
 
-    @GetMapping("/pricing/{productId}")
+    @GetMapping(value = "/pricing/{productId}", produces = "text/fragment+html")
     String pricing(@PathVariable String productId, @RequestParam(defaultValue = "standard") String edition, Model model) {
         model.addAttribute(
             "pricing",

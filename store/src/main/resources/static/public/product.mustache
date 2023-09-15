@@ -1,39 +1,39 @@
-<aside class="product">
-    <div class="product-header">
-        <h2 class="product-headline">{{details.model}}</h2>
-        <img
-            class="product-image"
-            alt="The {{details.edition}} edition version of the {{details.model}} tractor"
-            src="{{details.imageUrl}}"
-        />
-    </div>
-    <div class="product-details">
-        <label class="product-editions">
-            <p>Material Upgrade?</p>
-            <input
-                data-hx-get="/products/{{details.productId}}"
-                data-hx-vals='{ "edition": "{{details.otherEdition}}" }'
-                data-hx-target=".product"
-                data-hx-swap="outerHTML"
-                {{#details.isPlatinum}}checked{{/details.isPlatinum}}
-                type="checkbox"/>
-            <span aria-label="Platinum Edition">Platinum<br/>Edition</span>
-            <img class="product-image-platinum"
-                 alt="Preview of the platinum edition version of the {{details.model}} tractor"
-                 src="{{details.platinumImageUrl}}"/>
-        </label>
-        <div
-            class="checkout-buy-placeholder"
-            data-hx-get="/pricing/{{details.productId}}"
-            data-hx-vals='{ "edition": "{{details.edition}}" }'
-            data-hx-trigger="load delay:1s"
-            data-hx-target="this"
-        >{{> spinner}}</div>
-    </div>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Eicher Diesel 215/16</title>
+    <link href="/assets/store.css" rel="stylesheet"/>
+    <link href="/assets/products.css" rel="stylesheet"/>
+    <link href="/assets/checkout.css" rel="stylesheet"/>
+    <link href="/assets/recommendations.css" rel="stylesheet"/>
+    <link href="/assets/outlines.css" rel="stylesheet"/>
+    <script src="https://unpkg.com/htmx.org@1.9.5"
+            integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO"
+            crossorigin="anonymous"></script>
+    {{#liveReload}}
+        <script src="http://localhost:35729/livereload.js"></script>
+    {{/liveReload}}
+</head>
+<body class="store-layout">
+    <h1 class="store-header">The Tractor Store</h1>
     <div
-        class="recommendations-placeholder"
-        data-hx-get="/recommendations/{{details.productId}}"
+        class="product-placeholder"
         data-hx-trigger="load delay:1s"
+        data-hx-get="/products/{{productId}}"
+        data-hx-vals='{ "edition": "{{edition}}" }'
+        data-hx-headers='{ "Accept": "text/fragment+html" }'
         data-hx-target="this"
     >{{> spinner}}</div>
-</aside>
+    <div
+        class="checkout-summary-placeholder"
+        data-hx-trigger="load delay:1s, cart-updated from:body"
+        data-hx-get="/cart"
+        data-hx-headers='{ "Accept": "text/fragment+html" }'
+        data-hx-target="this"
+    >{{> spinner}}</div>
+</body>
+</html>

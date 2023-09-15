@@ -13,11 +13,17 @@ class ProductsApi {
 
     private final ProductsCatalogue productsCatalogue;
 
-    @GetMapping("/products/{productId}")
-    String productDetails(@PathVariable String productId, @RequestParam(defaultValue = "standard") String edition, Model model) {
-        var product = productsCatalogue.findById(productId).orElseThrow();
-        model.addAttribute("details", new ProductDetails(product, edition));
+    @GetMapping(value = "/products/{productId}", produces = "text/html")
+    String product(@PathVariable String productId, @RequestParam(defaultValue = "standard") String edition, Model model) {
+        model.addAttribute("productId", productId);
+        model.addAttribute("edition", edition);
         return "product";
     }
 
+    @GetMapping(value = "/products/{productId}", produces = "text/fragment+html")
+    String productDetails(@PathVariable String productId, @RequestParam(defaultValue = "standard") String edition, Model model) {
+        var product = productsCatalogue.findById(productId).orElseThrow();
+        model.addAttribute("details", new ProductDetails(product, edition));
+        return "product-details";
+    }
 }

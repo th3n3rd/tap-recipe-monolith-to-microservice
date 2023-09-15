@@ -12,7 +12,7 @@ class RecommendationsApi {
 
     private final ReadOnlyProductsCatalogue productsCatalogue;
 
-    @GetMapping("/recommendations/{productId}")
+    @GetMapping(value = "/recommendations/{productId}", produces = "text/fragment+html")
     String listProducts(@PathVariable String productId, Model model) {
         model.addAttribute("products", productsCatalogue.findAllByIdIsNot(productId));
         return "recommendations";
