@@ -36,7 +36,8 @@
     <div
         class="recommendations-placeholder"
         data-hx-trigger="load delay:1s"
-        data-hx-get="/recommendations/{{details.productId}}"
+        data-hx-get="/recommendations"
+        data-hx-vals='{ "productId": "{{details.productId}}" }'
         data-hx-headers='{ "Accept": "text/fragment+html" }'
         data-hx-target="this"
     >{{> spinner}}</div>
