@@ -1,0 +1,20 @@
+.recommendations-headline {
+    padding-top: 1em;
+    font-size: 1em;
+    font-weight: normal;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.recommendation div {
+    display: inline-block;
+    margin: 1rem;
+    border: 1px solid #333;
+    cursor: pointer;
+}
+
+.recommendation img {
+    max-width: 100%;
+    width: 300px;
+}
