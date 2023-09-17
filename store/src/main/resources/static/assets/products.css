@@ -1,10 +1,4 @@
-.product-placeholder {
-    min-width: 42rem;
-    max-width: 55rem;
-    min-height: 30rem;
-}
-
-.product {
+#product {
     display: grid;
     grid-template-columns: 3fr 2fr 2fr;
     grid-column-gap: 2rem;
@@ -12,7 +6,6 @@
     min-width: 42rem;
     max-width: 55rem;
     min-height: 30rem;
-    margin: 0 auto;
 }
 
 .product-headline {

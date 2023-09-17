@@ -1,7 +1,17 @@
+.checkout-summary-placeholder {
+    min-width: 42rem;
+    max-width: 55rem;
+    min-height: 3.2rem;
+    display: flex;
+    align-items: center;
+}
+
 .checkout-summary {
-    border-top: 3px solid lightgray;
-    padding-top: 1em;
-    grid-column: 1 / span 3;
+    min-width: 42rem;
+    max-width: 55rem;
+    min-height: 3.2rem;
+    align-self: center;
+    margin: 0 auto;
 }
 
 .checkout-minicart {
@@ -40,11 +50,11 @@
     transform: scale(0.98);
 }
 
-.checkout-buy-placeholder {
-    min-height: 4rem;
+#checkout-buy {
+    min-height: 3.2rem;
 }
 
-.checkout-buy button {
+#checkout-buy button {
     width: 100%;
     padding: 0.5em;
     font-size: 1.5em;
@@ -57,17 +67,11 @@
     transition: transform 0.1s ease-in-out;
 }
 
-.checkout-buy button:hover {
+#checkout-buy button:hover {
     background: rgb(75, 158, 204, 0.8);
 }
 
-.checkout-buy button:active {
+#checkout-buy button:active {
     background: gray;
     transform: scale(0.98);
-}
-
-.checkout-summary-placeholder {
-    min-width: 42rem;
-    max-width: 55rem;
-    min-height: 4rem;
 }

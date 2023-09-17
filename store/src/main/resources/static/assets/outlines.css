@@ -11,22 +11,39 @@ html::after {
   color: white;
   position: absolute;
   padding: 2px 5px;
-  bottom: 10px;
+  bottom: 9px;
   left: 7px;
 }
 
-.checkout-buy,
-.checkout-minicart {
+#product {
+  position: relative;
+  outline: 3px solid #c8845f;
+  outline-offset: 40px;
+}
+
+#product::before {
+  display: block;
+  background-color: #c8845f;
+  color: white;
+  position: absolute;
+  padding: 2px 5px;
+  content: "Products";
+  bottom: -40px;
+  left: -40px;
+}
+
+#checkout-buy,
+.checkout-summary-placeholder {
   position: relative;
   outline: 3px solid #5f9dc8;
 }
 
-.checkout-buy {
+#checkout-buy {
   outline-offset: 5px;
 }
 
-.checkout-buy::before,
-.checkout-minicart::before {
+#checkout-buy::before,
+.checkout-summary-placeholder::before {
   display: block;
   background-color: #5f9dc8;
   color: white;
@@ -34,27 +51,27 @@ html::after {
   padding: 2px 5px;
 }
 
-.checkout-minicart::before {
+.checkout-summary-placeholder::before {
   content: "Checkout";
 }
 
-.checkout-buy::before {
+#checkout-buy::before {
   content: "Checkout";
   bottom: -34px;
   right: -8px;
 }
 
-.checkout-minicart::before {
+.checkout-summary-placeholder::before {
   bottom: -30px;
   right: -3px;
 }
 
-.recommendations {
+#recommendations {
   position: relative;
   outline: 3px solid #7c9b2f;
 }
 
-.recommendations::before {
+#recommendations::before {
   content: "Recommendations";
   display: block;
   background-color: #7c9b2f;

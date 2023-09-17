@@ -21,12 +21,14 @@
 <body class="store-layout">
     <h1 class="store-header">The Tractor Store</h1>
     <div
-        class="product-placeholder"
+        id="product"
         data-hx-trigger="load delay:1s"
         data-hx-get="/products/{{productId}}"
         data-hx-vals='{ "edition": "{{edition}}" }'
         data-hx-headers='{ "Accept": "text/fragment+html" }'
-    >{{> spinner}}</div>
+        data-hx-swap="outerHTML"
+    >{{>spinner}}</div>
+    <hr/>
     <div
         class="checkout-summary-placeholder"
         data-hx-trigger="load delay:1s, cart-updated from:body"

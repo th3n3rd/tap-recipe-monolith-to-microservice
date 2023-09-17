@@ -13,6 +13,11 @@ a {
   color: inherit;
 }
 
+hr {
+  border-top: 3px solid lightgray;
+  width: 100%;
+}
+
 .loading-spinner-container {
   display: flex;
   width: 100%;
@@ -29,9 +34,10 @@ a {
 }
 
 .store-layout {
-  display: grid;
+  display: flex;
   padding: 0 2rem 3rem;
-  grid-row-gap: 2rem;
+  flex-direction: column;
+  row-gap: 2rem;
   margin: 0 auto;
   max-width: 55rem;
 }
