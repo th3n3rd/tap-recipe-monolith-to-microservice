@@ -1,7 +1,8 @@
 package com.example.store.products;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
+import org.springframework.data.repository.Repository;
 
-@Repository
-interface ProductsCatalogue extends JpaRepository<Product, String> {}
+interface ProductsCatalogue extends Repository<Product, String> {
+    Optional<Product> findById(String productId);
+}
