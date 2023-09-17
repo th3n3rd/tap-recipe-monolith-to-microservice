@@ -6,8 +6,6 @@
             data-hx-vals='{ "edition": "{{details.otherEdition}}" }'
             data-hx-headers='{ "Accept": "text/fragment+html" }'
             data-hx-push-url="true"
-            data-hx-target="#product"
-            data-hx-swap="outerHTML"
             {{#details.isPlatinum}}checked{{/details.isPlatinum}}
             type="checkbox"/>
         <span aria-label="Platinum Edition">Platinum<br/>Edition</span>
@@ -21,6 +19,5 @@
         data-hx-get="/pricing/{{details.productId}}"
         data-hx-vals='{ "edition": "{{details.edition}}" }'
         data-hx-headers='{ "Accept": "text/fragment+html" }'
-        data-hx-swap="outerHTML"
     >{{> spinner}}</div>
 </div>

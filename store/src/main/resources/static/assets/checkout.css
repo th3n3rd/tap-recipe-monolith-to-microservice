@@ -1,17 +1,8 @@
-.checkout-summary-placeholder {
+#checkout-summary {
     min-width: 42rem;
     max-width: 55rem;
     min-height: 3.2rem;
     display: flex;
-    align-items: center;
-}
-
-.checkout-summary {
-    min-width: 42rem;
-    max-width: 55rem;
-    min-height: 3.2rem;
-    align-self: center;
-    margin: 0 auto;
 }
 
 .checkout-minicart {
@@ -20,6 +11,7 @@
     align-items: center;
     column-gap: 20px;
     text-align: center;
+    margin: 0 auto;
 }
 
 .checkout-minicart img {

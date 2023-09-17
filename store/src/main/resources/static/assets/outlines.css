@@ -33,7 +33,7 @@ html::after {
 }
 
 #checkout-buy,
-.checkout-summary-placeholder {
+#checkout-summary {
   position: relative;
   outline: 3px solid #5f9dc8;
 }
@@ -43,7 +43,7 @@ html::after {
 }
 
 #checkout-buy::before,
-.checkout-summary-placeholder::before {
+#checkout-summary::before {
   display: block;
   background-color: #5f9dc8;
   color: white;
@@ -51,7 +51,7 @@ html::after {
   padding: 2px 5px;
 }
 
-.checkout-summary-placeholder::before {
+#checkout-summary::before {
   content: "Checkout";
 }
 
@@ -61,7 +61,7 @@ html::after {
   right: -8px;
 }
 
-.checkout-summary-placeholder::before {
+#checkout-summary::before {
   bottom: -30px;
   right: -3px;
 }
