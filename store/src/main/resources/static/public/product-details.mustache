@@ -9,4 +9,26 @@
         data-hx-headers='{ "Accept": "text/fragment+html" }'
         data-hx-swap="outerHTML"
     >{{> spinner}}</div>
+    <script>
+        (function () {
+            const itemAddedToCartEvent = "item-added-to-cart";
+            const animationEndEvent = "animationend";
+            const header = document.querySelector(".product-header");
+
+            function onItemAddedToCart() {
+                header.classList.add("product-added-to-cart");
+            }
+
+            function onAnimationEnd() {
+                header.classList.remove("product-added-to-cart");
+            }
+
+            document.addEventListener(itemAddedToCartEvent, onItemAddedToCart);
+            header.addEventListener(animationEndEvent, onAnimationEnd);
+            header.addEventListener("htmx:beforeCleanupElement", function () {
+                document.removeEventListener(itemAddedToCartEvent, onItemAddedToCart);
+                header.removeEventListener(animationEndEvent, onAnimationEnd);
+            });
+        })();
+    </script>
 </aside>

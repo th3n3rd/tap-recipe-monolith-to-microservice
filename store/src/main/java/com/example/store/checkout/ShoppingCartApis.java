@@ -20,13 +20,13 @@ class ShoppingCartApis {
     ResponseEntity<?> addItem(@ModelAttribute AddItem addItem) {
         var pricing = pricingBook.findByProductIdAndEdition(addItem.productId(), addItem.edition()).orElseThrow();
         shoppingCart.add(new ShoppingCart.Item(pricing.getProductId(), pricing.getPrice()));
-        return cartUpdatedEvent();
+        return event("item-added-to-cart");
     }
 
     @DeleteMapping("/cart")
     ResponseEntity<?> clear() {
         shoppingCart.empty();
-        return cartUpdatedEvent();
+        return event("cart-cleared");
     }
 
     @GetMapping(value = "/cart", produces = "text/fragment+html")
@@ -37,10 +37,10 @@ class ShoppingCartApis {
 
     record AddItem(String productId, String edition) {}
 
-    private ResponseEntity<Object> cartUpdatedEvent() {
+    private ResponseEntity<Object> event(String event) {
         return ResponseEntity
             .noContent()
-            .header("HX-Trigger", "cart-updated")
+            .header("HX-Trigger", "cart-updated", event)
             .build();
     }
 }
