@@ -26,14 +26,12 @@
         data-hx-get="/products/{{productId}}"
         data-hx-vals='{ "edition": "{{edition}}" }'
         data-hx-headers='{ "Accept": "text/fragment+html" }'
-        data-hx-target="this"
     >{{> spinner}}</div>
     <div
         class="checkout-summary-placeholder"
         data-hx-trigger="load delay:1s, cart-updated from:body"
         data-hx-get="/cart"
         data-hx-headers='{ "Accept": "text/fragment+html" }'
-        data-hx-target="this"
     >{{> spinner}}</div>
 </body>
 </html>
