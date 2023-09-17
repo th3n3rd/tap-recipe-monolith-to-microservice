@@ -25,7 +25,7 @@
     width: 100%;
 }
 
-.product-details {
+.product-options {
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;

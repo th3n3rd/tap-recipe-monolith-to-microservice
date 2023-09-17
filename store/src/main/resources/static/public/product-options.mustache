@@ -1,0 +1,26 @@
+<div class="product-options">
+    <label class="product-editions">
+        <p>Material Upgrade?</p>
+        <input
+            data-hx-get="/products/{{details.productId}}"
+            data-hx-vals='{ "edition": "{{details.otherEdition}}" }'
+            data-hx-headers='{ "Accept": "text/fragment+html" }'
+            data-hx-push-url="true"
+            data-hx-target=".product"
+            data-hx-swap="outerHTML"
+            {{#details.isPlatinum}}checked{{/details.isPlatinum}}
+            type="checkbox"/>
+        <span aria-label="Platinum Edition">Platinum<br/>Edition</span>
+        <img class="product-image-platinum"
+             alt="Preview of the platinum edition version of the {{details.model}} tractor"
+             src="{{details.platinumImageUrl}}"/>
+    </label>
+    <div
+        class="checkout-buy-placeholder"
+        data-hx-trigger="load delay:1s"
+        data-hx-get="/pricing/{{details.productId}}"
+        data-hx-vals='{ "edition": "{{details.edition}}" }'
+        data-hx-headers='{ "Accept": "text/fragment+html" }'
+        data-hx-target="this"
+    >{{> spinner}}</div>
+</div>
