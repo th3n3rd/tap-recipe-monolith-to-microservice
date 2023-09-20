@@ -1,14 +1,15 @@
 import puppeteer from "puppeteer";
-import { configure, getDocument } from "pptr-testing-library";
+import { getDocument } from "pptr-testing-library";
 import {
-    buyProduct,
-    containsText,
+    buyDisplayedProduct,
     displayProductPrice,
+    displaysPageTitle,
     displaysPlatinumProductImage,
-    displaysProductModel,
+    displaysProductTitle,
     displaysRecommendations,
     displaysStandardProductImage,
     emptyShoppingCart,
+    emptyShoppingCartIfNotEmpty,
     selectRecommendedProduct,
     shoppingCartContains,
     shoppingCartIsEmpty,
@@ -22,39 +23,60 @@ if (!url) {
     process.exit(1);
 }
 
-// global testing-library timeout
-configure({
-    asyncUtilTimeout: 3000
-});
+const debugEnabled = process.argv.includes("--debug");
 
-(async () => {
-    const { browser, tab } = await openWebBrowser();
+async function openWebBrowser(debugEnabled = false) {
+    const launchOptions = debugEnabled
+        ? {
+            headless: false,
+            slowMo: 0.25,
+            defaultViewport: {
+                width: 1280,
+                height: 1280
+            },
+            args: ['--window-size=1280,1280']
+        }
+        : { headless: true }
+    const browser = await puppeteer.launch(launchOptions);
+    const tab = await browser.newPage();
+    return { browser, tab }
+}
+
+async function visitPage(currentTab, newUrl) {
+    await currentTab.goto(newUrl);
+    return await getDocument(currentTab);
+}
+
+(async function journeyTest() {
+    const { browser, tab } = await openWebBrowser(debugEnabled);
 
     let document = await visitPage(tab, url);
 
-    await containsText(document, /The Tractor Store/);
-    await displaysProductModel(document, "Eicher Diesel 215/16");
+    await emptyShoppingCartIfNotEmpty(document);
+
+    await displaysPageTitle(document, /The Tractor Store/);
+    await displaysProductTitle(document, "Eicher Diesel 215/16");
     await displaysStandardProductImage(document, "Eicher Diesel 215/16");
     await displayProductPrice(document, "$58");
 
     await shoppingCartIsEmpty(document);
-    await buyProduct(document);
+    await buyDisplayedProduct(document);
     await shoppingCartContains(document, 1);
-    await buyProduct(document);
+    await buyDisplayedProduct(document);
     await shoppingCartContains(document, 2);
     await shoppingCartTotals(document, "$116");
 
     await switchToPlatinumEdition(document);
     await displaysPlatinumProductImage(document, "Eicher Diesel 215/16");
     await displayProductPrice(document, "$958");
-    await buyProduct(document);
+    await buyDisplayedProduct(document);
     await shoppingCartContains(document, 3);
     await shoppingCartTotals(document, "$1074");
 
     await emptyShoppingCart(document);
     await shoppingCartIsEmpty(document);
 
-    await buyProduct(document);
+    await buyDisplayedProduct(document);
     await shoppingCartContains(document, 1);
     await shoppingCartTotals(document, "$958");
     await emptyShoppingCart(document);
@@ -65,7 +87,7 @@ configure({
     ]);
 
     await selectRecommendedProduct(document, "Porsche-Diesel Master 419")
-    await displaysProductModel(document, "Porsche-Diesel Master 419");
+    await displaysProductTitle(document, "Porsche-Diesel Master 419");
     await displaysStandardProductImage(document, "Porsche-Diesel Master 419");
     await displayProductPrice(document, "$66");
     await displaysRecommendations(document, [
@@ -74,20 +96,9 @@ configure({
     ]);
 
     document = await visitPage(tab, `${url}/products/fendt?edition=platinum`)
-    await displaysProductModel(document, "Fendt F20 Dieselroß");
+    await displaysProductTitle(document, "Fendt F20 Dieselroß");
     await displaysPlatinumProductImage(document, "Fendt F20 Dieselroß");
 
     await browser.close();
 })();
-
-async function openWebBrowser() {
-    const browser = await puppeteer.launch({ headless: true });
-    const tab = await browser.newPage();
-    return { browser, tab }
-}
-
-async function visitPage(currentTab, newUrl) {
-    await currentTab.goto(newUrl);
-    return await getDocument(currentTab);
-}
 

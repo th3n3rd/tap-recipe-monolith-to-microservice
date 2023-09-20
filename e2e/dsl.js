@@ -1,60 +1,133 @@
 import { queries } from "pptr-testing-library";
 
-export async function containsText(document, text) {
-    await queries.findByText(document, text, {});
+const timeout = 5000;
+const waitForOptions = { timeout: timeout }
+
+export async function displaysPageTitle(document, title) {
+    try {
+        await queries.findByRole(document, "heading", { level: 1, name: title }, waitForOptions);
+    } catch (error) {
+        Error.captureStackTrace(error, displaysPageTitle);
+        throw error;
+    }
 }
 
-export async function displaysProductModel(document, model) {
-    return containsText(document, model);
+export async function displaysProductTitle(document, model) {
+    try {
+        await queries.findByRole(document, "heading", { level: 2, name: model }, waitForOptions);
+    } catch (error) {
+        Error.captureStackTrace(error, displaysProductTitle);
+        throw error;
+    }
 }
 
 export async function switchToPlatinumEdition(document) {
-    const checkbox = await queries.findByLabelText(document, /Platinum Edition/);
-    await checkbox.click();
+    try {
+        const checkbox = await queries.findByLabelText(document, /Platinum Edition/, waitForOptions);
+        await checkbox.click();
+    } catch (error) {
+        Error.captureStackTrace(error, switchToPlatinumEdition);
+        throw error;
+    }
 }
 
 export async function displaysStandardProductImage(document, product) {
-    await queries.findByAltText(document, new RegExp(`^The standard edition version of the ${product}`));
+    try {
+        await queries.findByAltText(document, new RegExp(`^The standard edition version of the ${product}`), waitForOptions);
+    } catch (error) {
+        Error.captureStackTrace(error, displaysStandardProductImage);
+        throw error;
+    }
 }
 
 export async function displaysPlatinumProductImage(document, product) {
-    await queries.findByAltText(document, new RegExp(`^The platinum edition version of the ${product}`));
+    try {
+        await queries.findByAltText(document, new RegExp(`^The platinum edition version of the ${product}`), waitForOptions);
+    } catch (error) {
+        Error.captureStackTrace(error, displaysPlatinumProductImage);
+        throw error;
+    }
 }
 
 export async function displayProductPrice(document, price) {
-    await queries.findByText(document, new RegExp(`Buy for \\${price}`));
+    await queries.findByText(document, new RegExp(`Buy for \\${price}`), waitForOptions);
 }
 
-export async function buyProduct(document) {
-    const buy = await queries.findByRole(document, "button", { name: /Buy for/ });
-    await buy.click();
+export async function buyDisplayedProduct(document) {
+    try {
+        const buy = await queries.findByRole(document, "button", { name: /Buy for/ }, waitForOptions);
+        await buy.click();
+    } catch (error) {
+        Error.captureStackTrace(error, buyDisplayedProduct);
+        throw error;
+    }
 }
 
 export async function shoppingCartContains(document, numberOfElements) {
-    await queries.findByText(document, new RegExp(`You've picked ${numberOfElements} items`))
+    try {
+        await queries.findByText(document, new RegExp(`You've picked ${numberOfElements} items`), waitForOptions);
+    } catch (error) {
+        Error.captureStackTrace(error, shoppingCartContains);
+        throw error;
+    }
 }
 
 export async function shoppingCartIsEmpty(document) {
-    await queries.findByText(document, new RegExp(`Your cart is empty`))
+    try {
+        await queries.findByText(document, new RegExp(`Your cart is empty`), waitForOptions);
+    } catch (error) {
+        Error.captureStackTrace(error, shoppingCartIsEmpty);
+        throw error;
+    }
 }
 
 export async function shoppingCartTotals(document, total) {
-    await queries.findByText(document, new RegExp(`for a total of \\${total}`))
+    try {
+        await queries.findByText(document, new RegExp(`for a total of \\${total}`), waitForOptions);
+    } catch (error) {
+        Error.captureStackTrace(error, shoppingCartTotals);
+        throw error;
+    }
 }
 
 export async function emptyShoppingCart(document) {
-    const emptyCart = await queries.findByRole(document, "button", { name: /Empty cart/ })
-    await emptyCart.click();
+    try {
+        const emptyCart = await queries.findByRole(document, "button", { name: /Empty cart/ }, waitForOptions);
+        await emptyCart.click();
+    } catch (error) {
+        Error.captureStackTrace(error, emptyShoppingCart);
+        throw error;
+    }
+}
+
+export async function emptyShoppingCartIfNotEmpty(document) {
+    try {
+        const emptyCart = await queries.findByRole(document, "button", { name: /Empty cart/ }, waitForOptions);
+        await emptyCart.click();
+    } catch (error) {
+        // ignore errors
+    }
 }
 
 export async function displaysRecommendations(document, products) {
-    const recommendations = await queries.findByRole(document, "region", { name: /Recommendations/ });
-    for (const product of products) {
-        await queries.findByAltText(recommendations, new RegExp(`^A recommendation for the standard edition version of the ${product}`));
+    try {
+        const recommendations = await queries.findByRole(document, "region", { name: /Recommendations/ }, waitForOptions);
+        for (const product of products) {
+            await queries.findByAltText(recommendations, new RegExp(`^A recommendation for the standard edition version of the ${product}`), waitForOptions);
+        }
+    } catch (error) {
+        Error.captureStackTrace(error, displaysRecommendations);
+        throw error;
     }
 }
 
 export async function selectRecommendedProduct(document, product) {
-    const recommendation = await queries.findByAltText(document, new RegExp(`^A recommendation for the standard edition version of the ${product}`));
-    await recommendation.click();
+    try {
+        const recommendation = await queries.findByAltText(document, new RegExp(`^A recommendation for the standard edition version of the ${product}`), waitForOptions);
+        await recommendation.click();
+    } catch (error) {
+        Error.captureStackTrace(error, selectRecommendedProduct);
+        throw error;
+    }
 }
+
