@@ -66,6 +66,23 @@ html::after {
   right: -3px;
 }
 
+.checkout-success {
+  position: relative;
+  outline: 3px solid #5f9dc8;
+  outline-offset: 12px;
+}
+
+.checkout-success::after {
+  content: "Checkout";
+  display: block;
+  background-color: #5f9dc8;
+  color: white;
+  position: absolute;
+  padding: 2px 5px;
+  bottom: -41px;
+  right: -15px;
+}
+
 #recommendations {
   position: relative;
   outline: 3px solid #7c9b2f;

@@ -42,6 +42,27 @@
     transform: scale(0.98);
 }
 
+.checkout-start button {
+    padding: 0.4em;
+    font-size: 1.2em;
+    border: none;
+    color: white;
+    border-radius: 0.25em;
+    background: rgba(86, 149, 55, 0.8);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+}
+
+.checkout-start button:hover {
+    background: rgba(94, 168, 60, 0.8);
+}
+
+.checkout-start button:active {
+    background: gray;
+    transform: scale(0.98);
+}
+
 #checkout-buy {
     min-height: 3.2rem;
 }
@@ -66,4 +87,41 @@
 #checkout-buy button:active {
     background: gray;
     transform: scale(0.98);
+}
+
+.checkout-continue-shopping button {
+    padding: 0.4em;
+    font-size: 1.2em;
+    border: none;
+    color: white;
+    border-radius: 0.25em;
+    background: rgb(75, 158, 204);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+}
+
+.checkout-continue-shopping button:hover {
+    background: rgb(75, 158, 204, 0.8);
+}
+
+.checkout-continue-shopping button:active {
+    background: gray;
+    transform: scale(0.98);
+}
+
+.checkout-success {
+    min-width: 42rem;
+    max-width: 55rem;
+    min-height: 3.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkout-success .check-mark {
+    font-size: 5em;
+    color: rgb(28, 184, 65);
+    text-shadow: 5px 5px 0 rgba(255, 255, 255, 0.8);
+    text-align: center;
 }

@@ -17,6 +17,14 @@
                     type="button"
                 >Empty cart</button>
             </form>
+            <form class="checkout-start"
+                  data-hx-post="/checkout"
+                  data-hx-trigger="click"
+                  data-hx-target="#store-content"
+                  data-hx-push-url="true"
+            >
+                <button type="button">Checkout</button>
+            </form>
         {{/cart.isEmpty}}
     </div>
 </div>

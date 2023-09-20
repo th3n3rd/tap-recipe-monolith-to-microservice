@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @Controller
-class PricingApis {
+class PricingApi {
 
     private final PricingBook pricingBook;
 

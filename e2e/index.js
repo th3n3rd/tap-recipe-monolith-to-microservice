@@ -2,7 +2,10 @@ import puppeteer from "puppeteer";
 import { getDocument } from "pptr-testing-library";
 import {
     buyDisplayedProduct,
+    checkout,
+    continueShopping,
     displayProductPrice,
+    displaysOrderConfirmation,
     displaysPageTitle,
     displaysPlatinumProductImage,
     displaysProductTitle,
@@ -98,6 +101,13 @@ async function visitPage(currentTab, newUrl) {
     document = await visitPage(tab, `${url}/products/fendt?edition=platinum`)
     await displaysProductTitle(document, "Fendt F20 Dieselroß");
     await displaysPlatinumProductImage(document, "Fendt F20 Dieselroß");
+
+    await buyDisplayedProduct(document);
+    await checkout(document);
+    await displaysOrderConfirmation(document);
+    await continueShopping(document)
+    await displaysProductTitle(document, "Eicher Diesel 215/16");
+    await shoppingCartIsEmpty(document);
 
     await browser.close();
 })();

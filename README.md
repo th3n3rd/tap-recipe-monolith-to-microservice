@@ -18,4 +18,4 @@ of a monolithic application into a microservice.
 - [ ] Complete the checkout flow
     - [ ] Review the shopping cart
     - [ ] Pay for the order
-    - [ ] Receive order Confirmation
+    - [x] Present order confirmation and continue shopping

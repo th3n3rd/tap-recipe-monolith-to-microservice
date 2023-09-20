@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor
 @Controller
-class ShoppingCartApis {
+class ShoppingCartApi {
 
-    private final ShoppingCart shoppingCart = new ShoppingCart();
+    private final ShoppingCart shoppingCart;
     private final PricingBook pricingBook;
 
     @PostMapping(value = "/cart")

@@ -131,3 +131,31 @@ export async function selectRecommendedProduct(document, product) {
     }
 }
 
+export async function checkout(document) {
+    try {
+        const checkout = await queries.findByRole(document, "button", { name: /Checkout/ }, waitForOptions);
+        await checkout.click();
+    } catch (error) {
+        Error.captureStackTrace(error, checkout);
+        throw error;
+    }
+}
+
+export async function displaysOrderConfirmation(document) {
+    try {
+        await queries.findByText(document, /Your order is confirmed!/, waitForOptions);
+    } catch (error) {
+        Error.captureStackTrace(error, displaysOrderConfirmation);
+        throw error;
+    }
+}
+
+export async function continueShopping(document) {
+    try {
+        const continueShopping = await queries.findByRole(document, "button", { name: /Continue shopping/ }, waitForOptions);
+        await continueShopping.click();
+    } catch (error) {
+        Error.captureStackTrace(error, continueShopping);
+        throw error;
+    }
+}
