@@ -23,7 +23,7 @@ export async function displaysProductTitle(document, model) {
 
 export async function switchToPlatinumEdition(document) {
     try {
-        const checkbox = await queries.findByLabelText(document, /Platinum Edition/, waitForOptions);
+        const checkbox = await queries.findByLabelText(document, /Platinum Edition/, {}, waitForOptions);
         await checkbox.click();
     } catch (error) {
         Error.captureStackTrace(error, switchToPlatinumEdition);
@@ -33,7 +33,7 @@ export async function switchToPlatinumEdition(document) {
 
 export async function displaysStandardProductImage(document, product) {
     try {
-        await queries.findByAltText(document, new RegExp(`^The standard edition version of the ${product}`), waitForOptions);
+        await queries.findByAltText(document, new RegExp(`^The standard edition version of the ${product}`), {}, waitForOptions);
     } catch (error) {
         Error.captureStackTrace(error, displaysStandardProductImage);
         throw error;
@@ -42,7 +42,7 @@ export async function displaysStandardProductImage(document, product) {
 
 export async function displaysPlatinumProductImage(document, product) {
     try {
-        await queries.findByAltText(document, new RegExp(`^The platinum edition version of the ${product}`), waitForOptions);
+        await queries.findByAltText(document, new RegExp(`^The platinum edition version of the ${product}`), {}, waitForOptions);
     } catch (error) {
         Error.captureStackTrace(error, displaysPlatinumProductImage);
         throw error;
@@ -50,7 +50,7 @@ export async function displaysPlatinumProductImage(document, product) {
 }
 
 export async function displaysProductPrice(document, price) {
-    await queries.findByText(document, new RegExp(`Buy for \\${price}`), waitForOptions);
+    await queries.findByText(document, new RegExp(`Buy for \\${price}`), {}, waitForOptions);
 }
 
 export async function buyDisplayedProduct(document) {
@@ -65,7 +65,7 @@ export async function buyDisplayedProduct(document) {
 
 export async function shoppingCartContains(document, numberOfElements) {
     try {
-        await queries.findByText(document, new RegExp(`You've picked ${numberOfElements} items`), waitForOptions);
+        await queries.findByText(document, new RegExp(`You've picked ${numberOfElements} items`), {}, waitForOptions);
     } catch (error) {
         Error.captureStackTrace(error, shoppingCartContains);
         throw error;
@@ -74,7 +74,7 @@ export async function shoppingCartContains(document, numberOfElements) {
 
 export async function shoppingCartIsEmpty(document) {
     try {
-        await queries.findByText(document, new RegExp(`Your cart is empty`), waitForOptions);
+        await queries.findByText(document, new RegExp(`Your cart is empty`), {}, waitForOptions);
     } catch (error) {
         Error.captureStackTrace(error, shoppingCartIsEmpty);
         throw error;
@@ -83,7 +83,7 @@ export async function shoppingCartIsEmpty(document) {
 
 export async function shoppingCartTotals(document, total) {
     try {
-        await queries.findByText(document, new RegExp(`for a total of \\${total}`), waitForOptions);
+        await queries.findByText(document, new RegExp(`for a total of \\${total}`), {}, waitForOptions);
     } catch (error) {
         Error.captureStackTrace(error, shoppingCartTotals);
         throw error;
@@ -113,7 +113,7 @@ export async function displaysRecommendations(document, products) {
     try {
         const recommendations = await queries.findByRole(document, "region", { name: /Recommendations/ }, waitForOptions);
         for (const product of products) {
-            await queries.findByAltText(recommendations, new RegExp(`^A recommendation for the standard edition version of the ${product}`), waitForOptions);
+            await queries.findByAltText(recommendations, new RegExp(`^A recommendation for the standard edition version of the ${product}`), {}, waitForOptions);
         }
     } catch (error) {
         Error.captureStackTrace(error, displaysRecommendations);
@@ -123,7 +123,7 @@ export async function displaysRecommendations(document, products) {
 
 export async function selectRecommendedProduct(document, product) {
     try {
-        const recommendation = await queries.findByAltText(document, new RegExp(`^A recommendation for the standard edition version of the ${product}`), waitForOptions);
+        const recommendation = await queries.findByAltText(document, new RegExp(`^A recommendation for the standard edition version of the ${product}`), {}, waitForOptions);
         await recommendation.click();
     } catch (error) {
         Error.captureStackTrace(error, selectRecommendedProduct);
@@ -143,7 +143,7 @@ export async function checkout(document) {
 
 export async function displaysOrderConfirmation(document) {
     try {
-        await queries.findByText(document, /Your order is confirmed!/, waitForOptions);
+        await queries.findByText(document, /Your order is confirmed!/, {}, waitForOptions);
     } catch (error) {
         Error.captureStackTrace(error, displaysOrderConfirmation);
         throw error;
