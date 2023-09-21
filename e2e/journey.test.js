@@ -15,7 +15,7 @@ import {
     shoppingCartContains,
     shoppingCartIsEmpty,
     shoppingCartTotals,
-    switchToPlatinumEdition
+    switchToPlatinumEdition, orderTotals
 } from "./dsl.js";
 import { openWebBrowser, visitPage } from "./test-utils.js";
 import { describe, test, beforeAll, afterAll, expect } from "vitest";
@@ -87,10 +87,20 @@ describe("Store", () => {
 
         await buyDisplayedProduct(document);
         await checkout(document);
-        await displaysOrderConfirmation(document);
-        await continueShopping(document)
+        const firstOrderNumber = await displaysOrderConfirmation(document);
+        await continueShopping(document);
         await displaysProductTitle(document, "Eicher Diesel 215/16");
         await shoppingCartIsEmpty(document);
+
+        await buyDisplayedProduct(document);
+        await shoppingCartTotals(document, "$58");
+        await buyDisplayedProduct(document);
+        await checkout(document);
+        const secondOrderNumber = await displaysOrderConfirmation(document);
+        expect(secondOrderNumber).not.toEqual(firstOrderNumber);
+        await orderTotals(document, "$116")
+        await continueShopping(document);
     });
+
 }, { timeout: 120_000 });
 

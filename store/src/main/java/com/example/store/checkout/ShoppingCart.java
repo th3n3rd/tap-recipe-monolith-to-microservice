@@ -5,6 +5,7 @@ import static java.math.BigDecimal.ZERO;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -34,5 +35,18 @@ class ShoppingCart {
         total = ZERO;
     }
 
-    record Item(String productId, BigDecimal price) {}
+    public Order checkout() {
+        return new Order(
+            items
+                .stream()
+                .map(it -> new OrderItem(
+                    it.productId,
+                    it.edition,
+                    it.price
+                ))
+                .collect(Collectors.toSet())
+        );
+    }
+
+    record Item(String productId, String edition, BigDecimal price) {}
 }

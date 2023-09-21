@@ -1,6 +1,8 @@
 <div class="checkout-success">
     <div class="check-mark">✔</div>
     <p>Your order is confirmed!</p>
+    <p>Order number: <span data-testid="order-number">{{order.id}}</span></p>
+    <p>Total amount ${{order.totalAmount}}</span></p>
     <div class="checkout-continue-shopping">
         <button
             data-hx-get="/"

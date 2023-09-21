@@ -19,7 +19,11 @@ class ShoppingCartApi {
     @PostMapping(value = "/cart")
     ResponseEntity<?> addItem(@ModelAttribute AddItem addItem) {
         var pricing = pricingBook.findByProductIdAndEdition(addItem.productId(), addItem.edition()).orElseThrow();
-        shoppingCart.add(new ShoppingCart.Item(pricing.getProductId(), pricing.getPrice()));
+        shoppingCart.add(new ShoppingCart.Item(
+            pricing.getProductId(),
+            pricing.getEdition(),
+            pricing.getPrice())
+        );
         return event("item-added-to-cart");
     }
 

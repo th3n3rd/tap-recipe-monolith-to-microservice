@@ -144,8 +144,19 @@ export async function checkout(document) {
 export async function displaysOrderConfirmation(document) {
     try {
         await queries.findByText(document, /Your order is confirmed!/, {}, waitForOptions);
+        const orderNumber = await queries.findByTestId(document, "order-number", {}, waitForOptions);
+        return await orderNumber.evaluate(element => element.textContent);
     } catch (error) {
         Error.captureStackTrace(error, displaysOrderConfirmation);
+        throw error;
+    }
+}
+
+export async function orderTotals(document, total) {
+    try {
+        await queries.findByText(document, new RegExp(`Total amount \\${total}`), waitForOptions);
+    } catch (error) {
+        Error.captureStackTrace(error, orderTotals);
         throw error;
     }
 }

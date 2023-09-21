@@ -5,7 +5,7 @@ export async function openWebBrowser(debugEnabled = false) {
     const launchOptions = debugEnabled
         ? {
             headless: false,
-            slowMo: 0.25,
+            slowMo: 50, // milliseconds
             defaultViewport: {
                 width: 1280,
                 height: 1280
