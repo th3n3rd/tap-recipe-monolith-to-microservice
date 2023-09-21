@@ -49,7 +49,7 @@ export async function displaysPlatinumProductImage(document, product) {
     }
 }
 
-export async function displayProductPrice(document, price) {
+export async function displaysProductPrice(document, price) {
     await queries.findByText(document, new RegExp(`Buy for \\${price}`), waitForOptions);
 }
 

@@ -2,7 +2,7 @@ import {
     buyDisplayedProduct,
     checkout,
     continueShopping,
-    displayProductPrice,
+    displaysProductPrice,
     displaysOrderConfirmation,
     displaysPageTitle,
     displaysPlatinumProductImage,
@@ -43,7 +43,7 @@ describe("Store", () => {
         await displaysPageTitle(document, /The Tractor Store/);
         await displaysProductTitle(document, "Eicher Diesel 215/16");
         await displaysStandardProductImage(document, "Eicher Diesel 215/16");
-        await displayProductPrice(document, "$58");
+        await displaysProductPrice(document, "$58");
 
         await shoppingCartIsEmpty(document);
         await buyDisplayedProduct(document);
@@ -54,7 +54,7 @@ describe("Store", () => {
 
         await switchToPlatinumEdition(document);
         await displaysPlatinumProductImage(document, "Eicher Diesel 215/16");
-        await displayProductPrice(document, "$958");
+        await displaysProductPrice(document, "$958");
         await buyDisplayedProduct(document);
         await shoppingCartContains(document, 3);
         await shoppingCartTotals(document, "$1074");
@@ -75,7 +75,7 @@ describe("Store", () => {
         await selectRecommendedProduct(document, "Porsche-Diesel Master 419")
         await displaysProductTitle(document, "Porsche-Diesel Master 419");
         await displaysStandardProductImage(document, "Porsche-Diesel Master 419");
-        await displayProductPrice(document, "$66");
+        await displaysProductPrice(document, "$66");
         await displaysRecommendations(document, [
             "Fendt F20 Dieselroß",
             "Eicher Diesel 215/16"
