@@ -5,10 +5,11 @@
   "author": "Marco Garofalo",
   "type": "module",
   "scripts": {
-    "test": "node index.js"
+    "test": "vitest run ./"
   },
   "dependencies": {
     "pptr-testing-library": "^0.7.0",
-    "puppeteer": "^21.1.1"
+    "puppeteer": "^21.1.1",
+    "vitest": "^0.34.4"
   }
 }
