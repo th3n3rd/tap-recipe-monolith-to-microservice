@@ -3,6 +3,17 @@ import { queries } from "pptr-testing-library";
 const timeout = 5000;
 const waitForOptions = { timeout: timeout }
 
+function waitForHtmxToSettle() {
+    // htmx by default uses 20ms in order to settle the new attributes on inserted elements
+    // this seems to affect buttons/clicks that might happen right after insertion
+    return new Promise(resolve => setTimeout(resolve, 50));
+}
+
+async function htmxSafeClick(element) {
+    await waitForHtmxToSettle();
+    await element.click();
+}
+
 export async function displaysPageTitle(document, title) {
     try {
         await queries.findByRole(document, "heading", { level: 1, name: title }, waitForOptions);
@@ -24,7 +35,7 @@ export async function displaysProductTitle(document, model) {
 export async function switchToPlatinumEdition(document) {
     try {
         const checkbox = await queries.findByLabelText(document, /Platinum Edition/, {}, waitForOptions);
-        await checkbox.click();
+        await htmxSafeClick(checkbox);
     } catch (error) {
         Error.captureStackTrace(error, switchToPlatinumEdition);
         throw error;
@@ -50,13 +61,18 @@ export async function displaysPlatinumProductImage(document, product) {
 }
 
 export async function displaysProductPrice(document, price) {
-    await queries.findByText(document, new RegExp(`Buy for \\${price}`), {}, waitForOptions);
+    try {
+        await queries.findByText(document, new RegExp(`Buy for \\${price}`), {}, waitForOptions);
+    } catch (error) {
+        Error.captureStackTrace(error, buyDisplayedProduct);
+        throw error;
+    }
 }
 
 export async function buyDisplayedProduct(document) {
     try {
         const buy = await queries.findByRole(document, "button", { name: /Buy for/ }, waitForOptions);
-        await buy.click();
+        await htmxSafeClick(buy);
     } catch (error) {
         Error.captureStackTrace(error, buyDisplayedProduct);
         throw error;
@@ -93,7 +109,7 @@ export async function shoppingCartTotals(document, total) {
 export async function emptyShoppingCart(document) {
     try {
         const emptyCart = await queries.findByRole(document, "button", { name: /Empty cart/ }, waitForOptions);
-        await emptyCart.click();
+        await htmxSafeClick(emptyCart);
     } catch (error) {
         Error.captureStackTrace(error, emptyShoppingCart);
         throw error;
@@ -103,7 +119,7 @@ export async function emptyShoppingCart(document) {
 export async function emptyShoppingCartIfNotEmpty(document) {
     try {
         const emptyCart = await queries.findByRole(document, "button", { name: /Empty cart/ }, waitForOptions);
-        await emptyCart.click();
+        await htmxSafeClick(emptyCart);
     } catch (error) {
         // ignore errors
     }
@@ -124,7 +140,7 @@ export async function displaysRecommendations(document, products) {
 export async function selectRecommendedProduct(document, product) {
     try {
         const recommendation = await queries.findByAltText(document, new RegExp(`^A recommendation for the standard edition version of the ${product}`), {}, waitForOptions);
-        await recommendation.click();
+        await htmxSafeClick(recommendation);
     } catch (error) {
         Error.captureStackTrace(error, selectRecommendedProduct);
         throw error;
@@ -134,7 +150,7 @@ export async function selectRecommendedProduct(document, product) {
 export async function checkout(document) {
     try {
         const checkout = await queries.findByRole(document, "button", { name: /Checkout/ }, waitForOptions);
-        await checkout.click();
+        await htmxSafeClick(checkout);
     } catch (error) {
         Error.captureStackTrace(error, checkout);
         throw error;
@@ -164,7 +180,7 @@ export async function orderTotals(document, total) {
 export async function continueShopping(document) {
     try {
         const continueShopping = await queries.findByRole(document, "button", { name: /Continue shopping/ }, waitForOptions);
-        await continueShopping.click();
+        await htmxSafeClick(continueShopping);
     } catch (error) {
         Error.captureStackTrace(error, continueShopping);
         throw error;

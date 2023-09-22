@@ -17,11 +17,12 @@ import {
     shoppingCartTotals,
     switchToPlatinumEdition, orderTotals
 } from "./dsl.js";
-import { openWebBrowser, visitPage } from "./test-utils.js";
-import { describe, test, beforeAll, afterAll, expect } from "vitest";
+import { openWebBrowser, reloadPage, visitPage } from "./test-utils.js";
+import { describe, test, beforeAll, afterAll, beforeEach, expect } from "vitest";
 
 describe("Store", () => {
     let session;
+    let document;
     let url;
     let debugEnabled;
 
@@ -31,46 +32,26 @@ describe("Store", () => {
         session = await openWebBrowser(debugEnabled);
     });
 
+    beforeEach(async () => {
+        document = await visitPage(session.tab, url);
+    })
+
     afterAll(async () => {
         await session.browser.close();
     });
 
-    test("Customer journey", async () => {
-        let document = await visitPage(session.tab, url);
-
-        await emptyShoppingCartIfNotEmpty(document);
-
+    test("Displaying products and browsing recommendations", async () => {
         await displaysPageTitle(document, /The Tractor Store/);
         await displaysProductTitle(document, "Eicher Diesel 215/16");
         await displaysStandardProductImage(document, "Eicher Diesel 215/16");
         await displaysProductPrice(document, "$58");
-
-        await shoppingCartIsEmpty(document);
-        await buyDisplayedProduct(document);
-        await shoppingCartContains(document, 1);
-        await buyDisplayedProduct(document);
-        await shoppingCartContains(document, 2);
-        await shoppingCartTotals(document, "$116");
-
-        await switchToPlatinumEdition(document);
-        await displaysPlatinumProductImage(document, "Eicher Diesel 215/16");
-        await displaysProductPrice(document, "$958");
-        await buyDisplayedProduct(document);
-        await shoppingCartContains(document, 3);
-        await shoppingCartTotals(document, "$1074");
-
-        await emptyShoppingCart(document);
-        await shoppingCartIsEmpty(document);
-
-        await buyDisplayedProduct(document);
-        await shoppingCartContains(document, 1);
-        await shoppingCartTotals(document, "$958");
-        await emptyShoppingCart(document);
-
         await displaysRecommendations(document, [
             "Fendt F20 Dieselroß",
             "Porsche-Diesel Master 419"
         ]);
+
+        await switchToPlatinumEdition(document);
+        await displaysPlatinumProductImage(document, "Eicher Diesel 215/16");
 
         await selectRecommendedProduct(document, "Porsche-Diesel Master 419")
         await displaysProductTitle(document, "Porsche-Diesel Master 419");
@@ -81,25 +62,47 @@ describe("Store", () => {
             "Eicher Diesel 215/16"
         ]);
 
-        document = await visitPage(session.tab, `${url}/products/fendt?edition=platinum`)
-        await displaysProductTitle(document, "Fendt F20 Dieselroß");
-        await displaysPlatinumProductImage(document, "Fendt F20 Dieselroß");
+        document = await reloadPage(session.tab);
+        await displaysPageTitle(document, /The Tractor Store/);
+        await displaysProductTitle(document, "Porsche-Diesel Master 419");
+    });
+
+    test("Track products in the shopping cart", async () => {
+        await emptyShoppingCartIfNotEmpty(document);
+
+        await buyDisplayedProduct(document);
+        await shoppingCartContains(document, 1);
+        await shoppingCartTotals(document, "$58");
+        await emptyShoppingCart(document);
+        await shoppingCartIsEmpty(document);
+
+        await buyDisplayedProduct(document);
+        await selectRecommendedProduct(document, "Porsche-Diesel Master 419")
+        await switchToPlatinumEdition(document);
+        await buyDisplayedProduct(document);
+        await shoppingCartContains(document, 2);
+        await shoppingCartTotals(document, "$1024");
+    });
+
+    test("Checkout products in the shopping cart", async () => {
+        await emptyShoppingCartIfNotEmpty(document);
 
         await buyDisplayedProduct(document);
         await checkout(document);
         const firstOrderNumber = await displaysOrderConfirmation(document);
+        await orderTotals(document, "$58")
         await continueShopping(document);
         await displaysProductTitle(document, "Eicher Diesel 215/16");
         await shoppingCartIsEmpty(document);
 
+        await selectRecommendedProduct(document, "Porsche-Diesel Master 419")
         await buyDisplayedProduct(document);
-        await shoppingCartTotals(document, "$58");
+        await selectRecommendedProduct(document, "Fendt F20 Dieselroß")
         await buyDisplayedProduct(document);
         await checkout(document);
         const secondOrderNumber = await displaysOrderConfirmation(document);
         expect(secondOrderNumber).not.toEqual(firstOrderNumber);
-        await orderTotals(document, "$116")
-        await continueShopping(document);
+        await orderTotals(document, "$120")
     });
 
 }, { timeout: 120_000 });
