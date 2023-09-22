@@ -93,7 +93,7 @@ describe("Store", () => {
         await checkout(document);
         const firstOrderNumber = await displaysOrderConfirmation(document);
         await orderContainsItems(document, [
-            { name: "Eicher Diesel 215/16", price: "$58" }
+            { model: "Eicher Diesel 215/16", edition: "standard", price: "$58" }
         ]);
         await orderTotals(document, "$58")
         await continueShopping(document);
@@ -102,15 +102,16 @@ describe("Store", () => {
         await selectRecommendedProduct(document, "Porsche-Diesel Master 419")
         await buyDisplayedProduct(document);
         await selectRecommendedProduct(document, "Fendt F20 Dieselroß")
+        await switchToPlatinumEdition(document);
         await buyDisplayedProduct(document);
         await checkout(document);
         const secondOrderNumber = await displaysOrderConfirmation(document);
         expect(secondOrderNumber).not.toEqual(firstOrderNumber);
         await orderContainsItems(document, [
-            { name: "Fendt F20 Dieselroß", price: "$54" },
-            { name: "Porsche-Diesel Master 419", price: "$66" },
+            { model: "Fendt F20 Dieselroß", edition: "platinum", price: "$954" },
+            { model: "Porsche-Diesel Master 419", edition: "standard", price: "$66" },
         ]);
-        await orderTotals(document, "$120")
+        await orderTotals(document, "$1020")
     });
 
 }, { timeout: 120_000 });

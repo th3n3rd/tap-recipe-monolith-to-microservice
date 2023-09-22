@@ -178,7 +178,8 @@ export async function orderContainsItems(document, expectedItems) {
             const item = items[i];
             const expectedItem = expectedItems[i];
             const content = await item.evaluate(element => element.textContent)
-            expect(content).toContain(expectedItem.name);
+            expect(content).toContain(expectedItem.model);
+            expect(content).toContain(expectedItem.edition);
             expect(content).toContain(expectedItem.price);
         }
     } catch (error) {

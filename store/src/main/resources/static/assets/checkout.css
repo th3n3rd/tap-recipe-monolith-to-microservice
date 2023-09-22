@@ -144,6 +144,10 @@
     text-align: left;
 }
 
+.checkout-success table .edition {
+    text-align: center;
+}
+
 .checkout-success table .price {
     text-align: right;
 }

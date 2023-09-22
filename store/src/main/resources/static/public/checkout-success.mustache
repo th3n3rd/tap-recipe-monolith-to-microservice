@@ -7,6 +7,7 @@
             <thead>
                 <tr>
                     <th class="model">Product</th>
+                    <th class="edition">Edition</th>
                     <th class="price">Price</th>
                 </tr>
             </thead>
@@ -14,11 +15,12 @@
                 {{#order.items}}
                     <tr>
                         <td class="model">{{productModel}}</td>
+                        <td class="edition">{{productEdition}}</td>
                         <td class="price">${{productPrice}}</td>
                     </tr>
                 {{/order.items}}
                 <tr>
-                    <td colspan="2" class="total price">Total amount ${{order.totalAmount}}</td>
+                    <td colspan="3" class="total price">Total amount ${{order.totalAmount}}</td>
                 </tr>
             </tbody>
         </table>
