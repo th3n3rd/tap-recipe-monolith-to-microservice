@@ -18,16 +18,19 @@ class OrderItem {
     private UUID id;
 
     private String productId;
+    private String productModel;
     private String productEdition;
     private BigDecimal productPrice;
 
     public OrderItem(
         String productId,
+        String productModel,
         String productEdition,
         BigDecimal productPrice
     ) {
         this.id = UUID.randomUUID();
         this.productId = productId;
+        this.productModel = productModel;
         this.productEdition = productEdition;
         this.productPrice = productPrice;
     }

@@ -125,3 +125,25 @@
     text-shadow: 5px 5px 0 rgba(255, 255, 255, 0.8);
     text-align: center;
 }
+
+.checkout-success table {
+    border-collapse: collapse;
+    margin: 40px 0;
+    width: 100%;
+}
+
+.checkout-success table td, .checkout-success table th {
+    padding: 10px 0;
+}
+
+.checkout-success .total {
+    border-top: 3px solid lightgray;
+}
+
+.checkout-success table .model {
+    text-align: left;
+}
+
+.checkout-success table .price {
+    text-align: right;
+}

@@ -15,12 +15,15 @@ class ShoppingCartApi {
 
     private final ShoppingCart shoppingCart;
     private final PricingBook pricingBook;
+    private final PurchasableProductsCatalogue productsCatalogue;
 
     @PostMapping(value = "/cart")
     ResponseEntity<?> addItem(@ModelAttribute AddItem addItem) {
         var pricing = pricingBook.findByProductIdAndEdition(addItem.productId(), addItem.edition()).orElseThrow();
+        var product = productsCatalogue.findById(addItem.productId()).orElseThrow();
         shoppingCart.add(new ShoppingCart.Item(
             pricing.getProductId(),
+            product.getModel(),
             pricing.getEdition(),
             pricing.getPrice())
         );

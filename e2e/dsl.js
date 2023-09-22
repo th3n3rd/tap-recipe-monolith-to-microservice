@@ -1,4 +1,5 @@
 import { queries } from "pptr-testing-library";
+import { expect } from "vitest";
 
 const timeout = 5000;
 const waitForOptions = { timeout: timeout }
@@ -164,6 +165,24 @@ export async function displaysOrderConfirmation(document) {
         return await orderNumber.evaluate(element => element.textContent);
     } catch (error) {
         Error.captureStackTrace(error, displaysOrderConfirmation);
+        throw error;
+    }
+}
+
+export async function orderContainsItems(document, expectedItems) {
+    try {
+        const rows = await queries.findAllByRole(document, "row", {}, waitForOptions);
+        const items = rows.slice(1, rows.length - 1); // remove the headers and the total amount
+        expect(items.length).toEqual(expectedItems.length);
+        for (let i = 0; i < items.length; i++){
+            const item = items[i];
+            const expectedItem = expectedItems[i];
+            const content = await item.evaluate(element => element.textContent)
+            expect(content).toContain(expectedItem.name);
+            expect(content).toContain(expectedItem.price);
+        }
+    } catch (error) {
+        Error.captureStackTrace(error, orderContainsItems);
         throw error;
     }
 }

@@ -1,8 +1,28 @@
 <div class="checkout-success">
     <div class="check-mark">✔</div>
     <p>Your order is confirmed!</p>
-    <p>Order number: <span data-testid="order-number">{{order.id}}</span></p>
-    <p>Total amount ${{order.totalAmount}}</span></p>
+    <div class="receipt">
+        <p>Order number: <span data-testid="order-number">{{order.id}}</span></p>
+        <table>
+            <thead>
+                <tr>
+                    <th class="model">Product</th>
+                    <th class="price">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#order.items}}
+                    <tr>
+                        <td class="model">{{productModel}}</td>
+                        <td class="price">${{productPrice}}</td>
+                    </tr>
+                {{/order.items}}
+                <tr>
+                    <td colspan="2" class="total price">Total amount ${{order.totalAmount}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div class="checkout-continue-shopping">
         <button
             data-hx-get="/"
@@ -10,6 +30,7 @@
             data-hx-trigger="click"
             data-hx-headers='{ "Accept": "text/html" }'
             type="button"
-        >Continue shopping</button>
+        >Continue shopping
+        </button>
     </div>
 </div>

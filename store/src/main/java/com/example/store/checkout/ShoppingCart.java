@@ -4,10 +4,13 @@ import static java.math.BigDecimal.ZERO;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+@Slf4j
 @Repository
 class ShoppingCart {
     private final List<Item> items = new ArrayList<>();
@@ -41,6 +44,7 @@ class ShoppingCart {
                 .stream()
                 .map(it -> new OrderItem(
                     it.productId,
+                    it.model,
                     it.edition,
                     it.price
                 ))
@@ -48,5 +52,5 @@ class ShoppingCart {
         );
     }
 
-    record Item(String productId, String edition, BigDecimal price) {}
+    record Item(String productId, String model, String edition, BigDecimal price) {}
 }

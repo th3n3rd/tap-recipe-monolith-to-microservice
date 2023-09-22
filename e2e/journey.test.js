@@ -15,7 +15,9 @@ import {
     shoppingCartContains,
     shoppingCartIsEmpty,
     shoppingCartTotals,
-    switchToPlatinumEdition, orderTotals
+    switchToPlatinumEdition,
+    orderTotals,
+    orderContainsItems
 } from "./dsl.js";
 import { openWebBrowser, reloadPage, visitPage } from "./test-utils.js";
 import { describe, test, beforeAll, afterAll, beforeEach, expect } from "vitest";
@@ -90,9 +92,11 @@ describe("Store", () => {
         await buyDisplayedProduct(document);
         await checkout(document);
         const firstOrderNumber = await displaysOrderConfirmation(document);
+        await orderContainsItems(document, [
+            { name: "Eicher Diesel 215/16", price: "$58" }
+        ]);
         await orderTotals(document, "$58")
         await continueShopping(document);
-        await displaysProductTitle(document, "Eicher Diesel 215/16");
         await shoppingCartIsEmpty(document);
 
         await selectRecommendedProduct(document, "Porsche-Diesel Master 419")
@@ -102,6 +106,10 @@ describe("Store", () => {
         await checkout(document);
         const secondOrderNumber = await displaysOrderConfirmation(document);
         expect(secondOrderNumber).not.toEqual(firstOrderNumber);
+        await orderContainsItems(document, [
+            { name: "Fendt F20 Dieselroß", price: "$54" },
+            { name: "Porsche-Diesel Master 419", price: "$66" },
+        ]);
         await orderTotals(document, "$120")
     });
 
