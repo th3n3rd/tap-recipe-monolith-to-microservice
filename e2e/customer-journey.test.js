@@ -21,11 +21,11 @@ import {
     shoppingCartIsEmpty,
     shoppingCartTotals,
     switchToPlatinumEdition
-} from "./dsl.js";
+} from "./storefront-dsl.js";
 import { openWebBrowser, reloadPage, visitPage } from "./test-utils.js";
 import { afterAll, beforeAll, beforeEach, describe, expect, test } from "vitest";
 
-describe("Store", () => {
+describe("Customer Journey", () => {
     let session;
     let document;
     let url;
