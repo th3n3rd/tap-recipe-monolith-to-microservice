@@ -26,7 +26,8 @@ import { openWebBrowser, reloadPage, visitPage } from "./test-utils.js";
 import { afterAll, beforeAll, beforeEach, describe, expect, test } from "vitest";
 
 describe("Customer Journey", () => {
-    let session;
+    let browser;
+    let tab;
     let document;
     let url;
     let debugEnabled;
@@ -34,15 +35,16 @@ describe("Customer Journey", () => {
     beforeAll(async () => {
         url = process.env.APP_URL || "http://localhost:8080";
         debugEnabled = !!process.env.DEBUG_MODE;
-        session = await openWebBrowser(debugEnabled);
+        browser = await openWebBrowser(debugEnabled);
+        tab = await browser.newPage();
     });
 
     beforeEach(async () => {
-        document = await visitPage(session.tab, url);
+        document = await visitPage(tab, url);
     })
 
     afterAll(async () => {
-        await session.browser.close();
+        await browser.close();
     });
 
     test("Displaying products and browsing recommendations", async () => {
@@ -67,7 +69,7 @@ describe("Customer Journey", () => {
             "Eicher Diesel 215/16"
         ]);
 
-        document = await reloadPage(session.tab);
+        document = await reloadPage(tab);
         await displaysPageTitle(document, /The Tractor Store/);
         await displaysProductTitle(document, "Porsche-Diesel Master 419");
     });

@@ -16,9 +16,7 @@ export async function openWebBrowser(debugEnabled = false) {
             ]
         }
         : { headless: true }
-    const browser = await puppeteer.launch(launchOptions);
-    const tab = await browser.newPage();
-    return { browser, tab }
+    return await puppeteer.launch(launchOptions);
 }
 
 export async function visitPage(currentTab, newUrl) {
