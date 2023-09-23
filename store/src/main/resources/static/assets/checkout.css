@@ -190,3 +190,19 @@
 .checkout-receipt table .price {
     text-align: right;
 }
+
+.orders {
+    min-width: 28rem;
+}
+
+.orders table {
+    width: 100%;
+}
+
+.orders table .total {
+    text-align: right;
+}
+
+.orders table .order-number {
+    text-align: left;
+}

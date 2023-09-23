@@ -14,6 +14,10 @@ export class Customer {
         this.tab = tab;
     }
 
+    async takeOver() {
+        await this.tab.bringToFront();
+    }
+
     async visitHomePage() {
         await this.tab.goto(`${this.baseUrl}/`);
         this.document = await getDocument(this.tab);

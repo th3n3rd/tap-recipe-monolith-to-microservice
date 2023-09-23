@@ -19,3 +19,6 @@ of a monolithic application into a microservice.
     - [x] Review the shopping cart
     - [ ] Pay for the order
     - [x] Present order confirmation and continue shopping
+- [ ] Provide a simple back office
+    - [x] Show the list of orders
+    - [ ] Drill down into an order details

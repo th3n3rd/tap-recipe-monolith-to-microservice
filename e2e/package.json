@@ -5,7 +5,7 @@
   "author": "Marco Garofalo",
   "type": "module",
   "scripts": {
-    "test": "vitest run ./"
+    "test": "vitest run --singleThread ./"
   },
   "dependencies": {
     "pptr-testing-library": "^0.7.0",
