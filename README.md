@@ -16,6 +16,6 @@ of a monolithic application into a microservice.
     - [x] Empty the shopping cart
 - [x] Port the recommendations capability of the [Tractor Store](https://the-tractor.store/)
 - [ ] Complete the checkout flow
-    - [ ] Review the shopping cart
+    - [x] Review the shopping cart
     - [ ] Pay for the order
     - [x] Present order confirmation and continue shopping

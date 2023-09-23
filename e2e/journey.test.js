@@ -2,25 +2,28 @@ import {
     buyDisplayedProduct,
     checkout,
     continueShopping,
-    displaysProductPrice,
     displaysOrderConfirmation,
     displaysPageTitle,
     displaysPlatinumProductImage,
+    displaysProductPrice,
     displaysProductTitle,
     displaysRecommendations,
+    displaysShoppingCartTitle,
     displaysStandardProductImage,
     emptyShoppingCart,
     emptyShoppingCartIfNotEmpty,
+    orderContainsItems,
+    orderTotals,
+    reviewShoppingCart,
     selectRecommendedProduct,
     shoppingCartContains,
+    shoppingCartContainsItems,
     shoppingCartIsEmpty,
     shoppingCartTotals,
-    switchToPlatinumEdition,
-    orderTotals,
-    orderContainsItems
+    switchToPlatinumEdition
 } from "./dsl.js";
 import { openWebBrowser, reloadPage, visitPage } from "./test-utils.js";
-import { describe, test, beforeAll, afterAll, beforeEach, expect } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, test } from "vitest";
 
 describe("Store", () => {
     let session;
@@ -75,6 +78,13 @@ describe("Store", () => {
         await buyDisplayedProduct(document);
         await shoppingCartContains(document, 1);
         await shoppingCartTotals(document, "$58");
+        await reviewShoppingCart(document);
+        await displaysShoppingCartTitle(document);
+        await shoppingCartContainsItems(document, [
+            { model: "Eicher Diesel 215/16", edition: "standard", price: "$58" },
+        ]);
+        await shoppingCartTotals(document, "$58");
+        await continueShopping(document);
         await emptyShoppingCart(document);
         await shoppingCartIsEmpty(document);
 
@@ -84,12 +94,21 @@ describe("Store", () => {
         await buyDisplayedProduct(document);
         await shoppingCartContains(document, 2);
         await shoppingCartTotals(document, "$1024");
+
+        await reviewShoppingCart(document);
+        await shoppingCartContainsItems(document, [
+            { model: "Eicher Diesel 215/16", edition: "standard", price: "$58" },
+            { model: "Porsche-Diesel Master 419", edition: "platinum", price: "$966" },
+        ]);
+        await shoppingCartTotals(document, "$1024");
     });
 
     test("Checkout products in the shopping cart", async () => {
         await emptyShoppingCartIfNotEmpty(document);
 
         await buyDisplayedProduct(document);
+        await reviewShoppingCart(document);
+        await displaysShoppingCartTitle(document);
         await checkout(document);
         const firstOrderNumber = await displaysOrderConfirmation(document);
         await orderContainsItems(document, [

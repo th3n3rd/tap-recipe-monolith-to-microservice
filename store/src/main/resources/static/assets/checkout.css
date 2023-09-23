@@ -42,6 +42,27 @@
     transform: scale(0.98);
 }
 
+.checkout-review button {
+    padding: 0.4em;
+    font-size: 1.2em;
+    border: none;
+    color: white;
+    border-radius: 0.25em;
+    background: rgba(247, 137, 17, 0.92);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+}
+
+.checkout-review button:hover {
+    background: rgba(247, 161, 83, 0.92);
+}
+
+.checkout-review button:active {
+    background: gray;
+    transform: scale(0.98);
+}
+
 .checkout-start button {
     padding: 0.4em;
     font-size: 1.2em;
@@ -101,6 +122,20 @@
     transition: transform 0.1s ease-in-out;
 }
 
+.checkout-cart {
+    min-width: 42rem;
+    max-width: 55rem;
+    min-height: 3.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkout-actions {
+    display: flex;
+    gap: 1rem;
+}
+
 .checkout-continue-shopping button:hover {
     background: rgb(75, 158, 204, 0.8);
 }
@@ -126,28 +161,32 @@
     text-align: center;
 }
 
-.checkout-success table {
+.checkout-receipt {
+    min-width: 28rem;
+}
+
+.checkout-receipt table {
     border-collapse: collapse;
     margin: 40px 0;
     width: 100%;
 }
 
-.checkout-success table td, .checkout-success table th {
+.checkout-receipt table td, .checkout-receipt table th {
     padding: 10px 0;
 }
 
-.checkout-success .total {
+.checkout-receipt .total {
     border-top: 3px solid lightgray;
 }
 
-.checkout-success table .model {
+.checkout-receipt table .model {
     text-align: left;
 }
 
-.checkout-success table .edition {
+.checkout-receipt table .edition {
     text-align: center;
 }
 
-.checkout-success table .price {
+.checkout-receipt table .price {
     text-align: right;
 }

@@ -17,6 +17,15 @@
                     type="button"
                 >Empty cart</button>
             </form>
+            <div class="checkout-review">
+                <button
+                    data-hx-get="/cart"
+                    data-hx-trigger="click"
+                    data-hx-push-url="true"
+                    data-hx-headers='{ "Accept": "text/html" }'
+                    type="button"
+                >View cart</button>
+            </div>
             <form class="checkout-start"
                   data-hx-post="/checkout"
                   data-hx-trigger="click"

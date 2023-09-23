@@ -37,9 +37,15 @@ class ShoppingCartApi {
     }
 
     @GetMapping(value = "/cart", produces = "text/fragment+html")
-    String listItems(Model model) {
+    String summary(Model model) {
         model.addAttribute("cart", shoppingCart);
         return "checkout-minicart";
+    }
+
+    @GetMapping(value = "/cart", produces = "text/html")
+    String listItems(Model model) {
+        model.addAttribute("cart", shoppingCart);
+        return "checkout-fullcart";
     }
 
     record AddItem(String productId, String edition) {}

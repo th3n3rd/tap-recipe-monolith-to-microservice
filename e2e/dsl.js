@@ -98,6 +98,44 @@ export async function shoppingCartIsEmpty(document) {
     }
 }
 
+export async function reviewShoppingCart(document){
+    try {
+        const review = await queries.findByRole(document, "button", { name: /View cart/ }, waitForOptions);
+        await htmxSafeClick(review);
+    } catch (error) {
+        Error.captureStackTrace(error, reviewShoppingCart);
+        throw error;
+    }
+}
+
+export async function displaysShoppingCartTitle(document) {
+    try {
+        await queries.findByRole(document, "heading", { level: 2, name: /Shopping Cart/ }, waitForOptions)
+    } catch (error) {
+        Error.captureStackTrace(error, displaysShoppingCartTitle);
+        throw error;
+    }
+}
+
+export async function shoppingCartContainsItems(document, expectedItems) {
+    try {
+        const rows = await queries.findAllByRole(document, "row", {}, waitForOptions);
+        const items = rows.slice(1, rows.length - 1); // remove the headers and the total amount
+        expect(items.length).toEqual(expectedItems.length);
+        for (let i = 0; i < items.length; i++){
+            const item = items[i];
+            const expectedItem = expectedItems[i];
+            const content = await item.evaluate(element => element.textContent)
+            expect(content).toContain(expectedItem.model);
+            expect(content).toContain(expectedItem.edition);
+            expect(content).toContain(expectedItem.price);
+        }
+    } catch (error) {
+        Error.captureStackTrace(error, shoppingCartContainsItems);
+        throw error;
+    }
+}
+
 export async function shoppingCartTotals(document, total) {
     try {
         await queries.findByText(document, new RegExp(`for a total of \\${total}`), {}, waitForOptions);

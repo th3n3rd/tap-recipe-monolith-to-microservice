@@ -21,6 +21,10 @@ class ShoppingCart {
         total = total.add(item.price);
     }
 
+    public List<Item> items() {
+        return items;
+    }
+
     public int size() {
         return items.size();
     }

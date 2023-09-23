@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Eicher Diesel 215/16</title>
+    <link href="/assets/store.css" rel="stylesheet"/>
+    <link href="/assets/products.css" rel="stylesheet"/>
+    <link href="/assets/checkout.css" rel="stylesheet"/>
+    <link href="/assets/recommendations.css" rel="stylesheet"/>
+    <link href="/assets/outlines.css" rel="stylesheet"/>
+    <script src="https://unpkg.com/htmx.org@1.9.5"
+            integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO"
+            crossorigin="anonymous"></script>
+    {{#liveReload}}
+        <script src="http://localhost:35729/livereload.js"></script>
+    {{/liveReload}}
+</head>
+<body class="store-layout">
+    <h1 class="store-header">The Tractor Store</h1>
+    <div id="store-content" data-hx-swap-oob="true">
+        {{> checkout-fullcart-details}}
+    </div>
+</body>
+</html>
