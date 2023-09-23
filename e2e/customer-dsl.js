@@ -4,7 +4,7 @@ import { expect } from "vitest";
 const timeout = 5000;
 const waitForOptions = { timeout: timeout }
 
-export class Storefront {
+export class Customer {
     tab;
     document;
     baseUrl;
@@ -24,20 +24,20 @@ export class Storefront {
         this.document = await getDocument(this.tab);
     }
 
-    async displaysPageTitle(title) {
+    async verifyPageTitle(title) {
         try {
             await queries.findByRole(this.document, "heading", { level: 1, name: title }, waitForOptions);
         } catch (error) {
-            Error.captureStackTrace(error, this.displaysPageTitle);
+            Error.captureStackTrace(error, this.verifyPageTitle);
             throw error;
         }
     }
 
-    async displaysProductTitle(model) {
+    async verifyProductTitle(model) {
         try {
             await queries.findByRole(this.document, "heading", { level: 2, name: model }, waitForOptions);
         } catch (error) {
-            Error.captureStackTrace(error, this.displaysProductTitle);
+            Error.captureStackTrace(error, this.verifyProductTitle);
             throw error;
         }
     }
@@ -52,25 +52,25 @@ export class Storefront {
         }
     }
 
-    async displaysStandardProductImage(product) {
+    async verifiesStandardProductImage(product) {
         try {
             await queries.findByAltText(this.document, new RegExp(`^The standard edition version of the ${product}`), {}, waitForOptions);
         } catch (error) {
-            Error.captureStackTrace(error, this.displaysStandardProductImage);
+            Error.captureStackTrace(error, this.verifiesStandardProductImage);
             throw error;
         }
     }
 
-    async displaysPlatinumProductImage(product) {
+    async verifiesPlatinumProductImage(product) {
         try {
             await queries.findByAltText(this.document, new RegExp(`^The platinum edition version of the ${product}`), {}, waitForOptions);
         } catch (error) {
-            Error.captureStackTrace(error, this.displaysPlatinumProductImage);
+            Error.captureStackTrace(error, this.verifiesPlatinumProductImage);
             throw error;
         }
     }
 
-    async displaysProductPrice(price) {
+    async verifiesProductPrice(price) {
         try {
             await queries.findByText(this.document, new RegExp(`Buy for \\${price}`), {}, waitForOptions);
         } catch (error) {
@@ -89,20 +89,20 @@ export class Storefront {
         }
     }
 
-    async shoppingCartContains(numberOfElements) {
+    async verifyShoppingCartContains(numberOfElements) {
         try {
             await queries.findByText(this.document, new RegExp(`You've picked ${numberOfElements} items`), {}, waitForOptions);
         } catch (error) {
-            Error.captureStackTrace(error, this.shoppingCartContains);
+            Error.captureStackTrace(error, this.verifyShoppingCartContains);
             throw error;
         }
     }
 
-    async shoppingCartIsEmpty() {
+    async verifyShoppingCartIsEmpty() {
         try {
             await queries.findByText(this.document, new RegExp(`Your cart is empty`), {}, waitForOptions);
         } catch (error) {
-            Error.captureStackTrace(error, this.shoppingCartIsEmpty);
+            Error.captureStackTrace(error, this.verifyShoppingCartIsEmpty);
             throw error;
         }
     }
@@ -117,16 +117,16 @@ export class Storefront {
         }
     }
 
-    async displaysShoppingCartTitle() {
+    async verifyShoppingCartTitle() {
         try {
             await queries.findByRole(this.document, "heading", { level: 2, name: /Shopping Cart/ }, waitForOptions)
         } catch (error) {
-            Error.captureStackTrace(error, this.displaysShoppingCartTitle);
+            Error.captureStackTrace(error, this.verifyShoppingCartTitle);
             throw error;
         }
     }
 
-    async shoppingCartContainsItems(expectedItems) {
+    async verifyShoppingCartContainsItems(expectedItems) {
         try {
             const rows = await queries.findAllByRole(this.document, "row", {}, waitForOptions);
             const items = rows.slice(1, rows.length - 1); // remove the headers and the total amount
@@ -140,16 +140,16 @@ export class Storefront {
                 expect(content).toContain(expectedItem.price);
             }
         } catch (error) {
-            Error.captureStackTrace(error, this.shoppingCartContainsItems);
+            Error.captureStackTrace(error, this.verifyShoppingCartContainsItems);
             throw error;
         }
     }
 
-    async shoppingCartTotals(total) {
+    async verifiesShoppingCartTotals(total) {
         try {
             await queries.findByText(this.document, new RegExp(`for a total of \\${total}`), {}, waitForOptions);
         } catch (error) {
-            Error.captureStackTrace(error, this.shoppingCartTotals);
+            Error.captureStackTrace(error, this.verifiesShoppingCartTotals);
             throw error;
         }
     }
@@ -173,14 +173,14 @@ export class Storefront {
         }
     }
 
-    async displaysRecommendations(products) {
+    async verifiesRecommendations(products) {
         try {
             const recommendations = await queries.findByRole(this.document, "region", { name: /Recommendations/ }, waitForOptions);
             for (const product of products) {
                 await queries.findByAltText(recommendations, new RegExp(`^A recommendation for the standard edition version of the ${product}`), {}, waitForOptions);
             }
         } catch (error) {
-            Error.captureStackTrace(error, this.displaysRecommendations);
+            Error.captureStackTrace(error, this.verifiesRecommendations);
             throw error;
         }
     }
@@ -205,18 +205,18 @@ export class Storefront {
         }
     }
 
-    async displaysOrderConfirmation() {
+    async verifyOrderIsConfirmed() {
         try {
             await queries.findByText(this.document, /Your order is confirmed!/, {}, waitForOptions);
             const orderNumber = await queries.findByTestId(this.document, "order-number", {}, waitForOptions);
             return await orderNumber.evaluate(element => element.textContent);
         } catch (error) {
-            Error.captureStackTrace(error, this.displaysOrderConfirmation);
+            Error.captureStackTrace(error, this.verifyOrderIsConfirmed);
             throw error;
         }
     }
 
-    async orderContainsItems(expectedItems) {
+    async verifyOrderContainsItems(expectedItems) {
         try {
             const rows = await queries.findAllByRole(this.document, "row", {}, waitForOptions);
             const items = rows.slice(1, rows.length - 1); // remove the headers and the total amount
@@ -230,16 +230,16 @@ export class Storefront {
                 expect(content).toContain(expectedItem.price);
             }
         } catch (error) {
-            Error.captureStackTrace(error, this.orderContainsItems);
+            Error.captureStackTrace(error, this.verifyOrderContainsItems);
             throw error;
         }
     }
 
-    async orderTotals(total) {
+    async verifyOrderTotals(total) {
         try {
             await queries.findByText(this.document, new RegExp(`Total amount \\${total}`), waitForOptions);
         } catch (error) {
-            Error.captureStackTrace(error, this.orderTotals);
+            Error.captureStackTrace(error, this.verifyOrderTotals);
             throw error;
         }
     }

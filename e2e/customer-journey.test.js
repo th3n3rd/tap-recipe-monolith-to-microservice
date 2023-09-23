@@ -1,114 +1,112 @@
-import { Storefront } from "./storefront-dsl.js";
+import { Customer } from "./customer-dsl.js";
 import { openWebBrowser, reloadPage, visitPage } from "./test-utils.js";
 import { afterAll, beforeAll, beforeEach, describe, expect, test } from "vitest";
 
-describe("Customer Journey", () => {
+describe("Customer Journeys", () => {
     let browser;
-    let baseUrl;
-    let debugEnabled;
-    let storefront;
+    let customer;
 
     beforeAll(async () => {
-        baseUrl = process.env.APP_URL || "http://localhost:8080";
-        debugEnabled = !!process.env.DEBUG_MODE;
+        const baseUrl = process.env.APP_URL || "http://localhost:8080";
+        const debugEnabled = !!process.env.DEBUG_MODE;
         browser = await openWebBrowser(debugEnabled);
-        storefront = new Storefront(await browser.newPage(), baseUrl);
+        customer = new Customer(await browser.newPage(), baseUrl);
     });
 
     beforeEach(async () => {
-        await storefront.visitHomePage();
+        await customer.visitHomePage();
     });
 
     afterAll(async () => {
         await browser.close();
     });
 
-    test("Displaying products and browsing recommendations", async () => {
-        await storefront.displaysPageTitle(/The Tractor Store/);
-        await storefront.displaysProductTitle("Eicher Diesel 215/16");
-        await storefront.displaysStandardProductImage("Eicher Diesel 215/16");
-        await storefront.displaysProductPrice("$58");
-        await storefront.displaysRecommendations([
+    test("Inspects products and browses recommendations", async () => {
+        await customer.verifyPageTitle(/The Tractor Store/);
+        await customer.verifyProductTitle("Eicher Diesel 215/16");
+        await customer.verifiesStandardProductImage("Eicher Diesel 215/16");
+        await customer.verifiesProductPrice("$58");
+        await customer.verifiesRecommendations([
             "Fendt F20 Dieselroß",
             "Porsche-Diesel Master 419"
         ]);
 
-        await storefront.switchToPlatinumEdition();
-        await storefront.displaysPlatinumProductImage("Eicher Diesel 215/16");
+        await customer.switchToPlatinumEdition();
+        await customer.verifiesPlatinumProductImage("Eicher Diesel 215/16");
 
-        await storefront.selectRecommendedProduct("Porsche-Diesel Master 419")
-        await storefront.displaysProductTitle("Porsche-Diesel Master 419");
-        await storefront.displaysStandardProductImage("Porsche-Diesel Master 419");
-        await storefront.displaysProductPrice("$66");
-        await storefront.displaysRecommendations([
+        await customer.selectRecommendedProduct("Porsche-Diesel Master 419")
+        await customer.verifyProductTitle("Porsche-Diesel Master 419");
+        await customer.verifiesStandardProductImage("Porsche-Diesel Master 419");
+        await customer.verifiesProductPrice("$66");
+        await customer.verifiesRecommendations([
             "Fendt F20 Dieselroß",
             "Eicher Diesel 215/16"
         ]);
 
-        await storefront.reloadPage();
-        await storefront.displaysPageTitle(/The Tractor Store/);
-        await storefront.displaysProductTitle("Porsche-Diesel Master 419");
+        await customer.reloadPage();
+        await customer.verifyPageTitle(/The Tractor Store/);
+        await customer.verifyProductTitle("Porsche-Diesel Master 419");
     });
 
-    test("Track products in the shopping cart", async () => {
-        await storefront.emptyShoppingCartIfNotEmpty();
+    test("Moves items in and out the shopping cart", async () => {
+        await customer.emptyShoppingCartIfNotEmpty();
 
-        await storefront.buyDisplayedProduct();
-        await storefront.shoppingCartContains(1);
-        await storefront.shoppingCartTotals("$58");
-        await storefront.reviewShoppingCart();
-        await storefront.displaysShoppingCartTitle();
-        await storefront.shoppingCartContainsItems([
+        await customer.buyDisplayedProduct();
+        await customer.verifyShoppingCartContains(1);
+        await customer.verifiesShoppingCartTotals("$58");
+        await customer.reviewShoppingCart();
+        await customer.verifyShoppingCartTitle();
+        await customer.verifyShoppingCartContainsItems([
             { model: "Eicher Diesel 215/16", edition: "standard", price: "$58" },
         ]);
-        await storefront.shoppingCartTotals("$58");
-        await storefront.continueShopping();
-        await storefront.emptyShoppingCart();
-        await storefront.shoppingCartIsEmpty();
+        await customer.verifiesShoppingCartTotals("$58");
+        await customer.continueShopping();
+        await customer.emptyShoppingCart();
+        await customer.verifyShoppingCartIsEmpty();
 
-        await storefront.buyDisplayedProduct();
-        await storefront.selectRecommendedProduct("Porsche-Diesel Master 419")
-        await storefront.switchToPlatinumEdition();
-        await storefront.buyDisplayedProduct();
-        await storefront.shoppingCartContains(2);
-        await storefront.shoppingCartTotals("$1024");
+        await customer.buyDisplayedProduct();
+        await customer.selectRecommendedProduct("Porsche-Diesel Master 419")
+        await customer.switchToPlatinumEdition();
+        await customer.buyDisplayedProduct();
+        await customer.verifyShoppingCartContains(2);
+        await customer.verifiesShoppingCartTotals("$1024");
 
-        await storefront.reviewShoppingCart();
-        await storefront.shoppingCartContainsItems([
+        await customer.reviewShoppingCart();
+        await customer.verifyShoppingCartContainsItems([
             { model: "Eicher Diesel 215/16", edition: "standard", price: "$58" },
             { model: "Porsche-Diesel Master 419", edition: "platinum", price: "$966" },
         ]);
-        await storefront.shoppingCartTotals("$1024");
+        await customer.verifiesShoppingCartTotals("$1024");
     });
 
-    test("Checkout products in the shopping cart", async () => {
-        await storefront.emptyShoppingCartIfNotEmpty();
+    test("Goes through the checkout process", async () => {
+        await customer.emptyShoppingCartIfNotEmpty();
 
-        await storefront.buyDisplayedProduct();
-        await storefront.reviewShoppingCart();
-        await storefront.displaysShoppingCartTitle();
-        await storefront.checkout();
-        const firstOrderNumber = await storefront.displaysOrderConfirmation();
-        await storefront.orderContainsItems([
+        await customer.buyDisplayedProduct();
+        await customer.reviewShoppingCart();
+        await customer.verifyShoppingCartTitle();
+        await customer.checkout();
+        const firstOrderNumber = await customer.verifyOrderIsConfirmed();
+        await customer.verifyOrderContainsItems([
             { model: "Eicher Diesel 215/16", edition: "standard", price: "$58" }
         ]);
-        await storefront.orderTotals("$58")
-        await storefront.continueShopping();
-        await storefront.shoppingCartIsEmpty();
+        await customer.verifyOrderTotals("$58")
+        await customer.continueShopping();
+        await customer.verifyShoppingCartIsEmpty();
 
-        await storefront.selectRecommendedProduct("Porsche-Diesel Master 419")
-        await storefront.buyDisplayedProduct();
-        await storefront.selectRecommendedProduct("Fendt F20 Dieselroß")
-        await storefront.switchToPlatinumEdition();
-        await storefront.buyDisplayedProduct();
-        await storefront.checkout();
-        const secondOrderNumber = await storefront.displaysOrderConfirmation();
+        await customer.selectRecommendedProduct("Porsche-Diesel Master 419")
+        await customer.buyDisplayedProduct();
+        await customer.selectRecommendedProduct("Fendt F20 Dieselroß")
+        await customer.switchToPlatinumEdition();
+        await customer.buyDisplayedProduct();
+        await customer.checkout();
+        const secondOrderNumber = await customer.verifyOrderIsConfirmed();
         expect(secondOrderNumber).not.toEqual(firstOrderNumber);
-        await storefront.orderContainsItems([
+        await customer.verifyOrderContainsItems([
             { model: "Fendt F20 Dieselroß", edition: "platinum", price: "$954" },
             { model: "Porsche-Diesel Master 419", edition: "standard", price: "$66" },
         ]);
-        await storefront.orderTotals("$1020")
+        await customer.verifyOrderTotals("$1020")
     });
 
 }, { timeout: 120_000 });
