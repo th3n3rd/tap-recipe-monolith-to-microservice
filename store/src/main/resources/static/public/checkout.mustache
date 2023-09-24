@@ -21,7 +21,12 @@
 <body class="store-layout">
     <h1 class="store-header">The Tractor Store</h1>
     <div id="store-content" data-hx-swap-oob="true">
-        {{> checkout-success}}
+        {{^order.isPaymentMethodSpecified}}
+            {{> checkout-payment}}
+        {{/order.isPaymentMethodSpecified}}
+        {{#order.isPaymentMethodSpecified}}
+            {{> checkout-success}}
+        {{/order.isPaymentMethodSpecified}}
     </div>
 </body>
 </html>

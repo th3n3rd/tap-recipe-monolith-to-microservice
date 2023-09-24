@@ -5,7 +5,9 @@
   "author": "Marco Garofalo",
   "type": "module",
   "scripts": {
-    "test": "vitest run --singleThread ./"
+    "test": "vitest run --singleThread ./",
+    "test:sales-clerk": "vitest run --singleThread ./sales-clerk-journey.test.js",
+    "test:customer": "vitest run --singleThread ./customer-journey.test.js"
   },
   "dependencies": {
     "pptr-testing-library": "^0.7.0",

@@ -209,6 +209,18 @@ export class Customer {
         }
     }
 
+    async decideToPayOverThePhone() {
+        try {
+            const paymentMethod = await queries.findByRole(this.document, "radio", { name: /Pay over the phone/ }, waitForOptions);
+            await this.htmxSafeClick(paymentMethod);
+            const continueCheckout = await queries.findByRole(this.document, "button", { name: /Continue/ }, waitForOptions);
+            await this.htmxSafeClick(continueCheckout);
+        } catch (error) {
+            Error.captureStackTrace(error, this.decideToPayOverThePhone);
+            throw error;
+        }
+    }
+
     async verifyOrderIsConfirmed() {
         try {
             await queries.findByText(this.document, /Your order is confirmed!/, {}, waitForOptions);

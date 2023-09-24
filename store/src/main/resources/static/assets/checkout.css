@@ -110,7 +110,7 @@
     transform: scale(0.98);
 }
 
-.checkout-continue-shopping button {
+.checkout-continue button {
     padding: 0.4em;
     font-size: 1.2em;
     border: none;
@@ -120,6 +120,21 @@
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     transition: transform 0.1s ease-in-out;
+}
+
+.checkout-payment form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.checkout-continue button:hover {
+    background: rgb(75, 158, 204, 0.8);
+}
+
+.checkout-continue button:active {
+    background: gray;
+    transform: scale(0.98);
 }
 
 .checkout-cart {
@@ -134,6 +149,18 @@
 .checkout-actions {
     display: flex;
     gap: 1rem;
+}
+
+.checkout-continue-shopping button {
+    padding: 0.4em;
+    font-size: 1.2em;
+    border: none;
+    color: white;
+    border-radius: 0.25em;
+    background: rgb(75, 158, 204);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
 }
 
 .checkout-continue-shopping button:hover {
@@ -192,7 +219,7 @@
 }
 
 .orders {
-    min-width: 32rem;
+    min-width: 42rem;
 }
 
 .orders table {
@@ -205,4 +232,12 @@
 
 .orders table .order-number {
     text-align: left;
+}
+
+.orders table .state {
+    text-align: center;
+}
+
+.orders table .payment-method {
+    text-align: center;
 }

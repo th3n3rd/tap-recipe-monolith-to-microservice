@@ -38,7 +38,16 @@ describe("Sales Clerk Journeys", () => {
         await salesClerk.takeOver();
         await salesClerk.reloadPage();
         await salesClerk.verifyNewlyAddedOrdersContain(previouslyKnownOrders, [
-            { state: "Placed", totalAmount: "$58.00" }
+            { state: "Placed", totalAmount: "$58.00", paymentMethod: "Unspecified" }
+        ]);
+
+        await customer.takeOver();
+        await customer.decideToPayOverThePhone();
+
+        await salesClerk.takeOver();
+        await salesClerk.reloadPage();
+        await salesClerk.verifyNewlyAddedOrdersContain(previouslyKnownOrders, [
+            { state: "Placed", totalAmount: "$58.00", paymentMethod: "OverThePhone" }
         ]);
     });
 

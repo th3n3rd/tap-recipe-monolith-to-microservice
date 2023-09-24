@@ -34,11 +34,15 @@ class Order {
     @Enumerated(EnumType.STRING)
     private State state;
 
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
     private BigDecimal totalAmount;
 
     public Order(Set<OrderItem> items) {
         this.id = UUID.randomUUID();
         this.state = State.Placed;
+        this.paymentMethod = PaymentMethod.Unspecified;
         this.items = items;
         this.totalAmount = ZERO;
         for (var item : items) {
@@ -46,8 +50,21 @@ class Order {
         }
     }
 
+    public void selectPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public boolean isPaymentMethodSpecified() {
+        return !paymentMethod.equals(PaymentMethod.Unspecified);
+    }
+
     enum State {
         Unmanaged,
         Placed
+    }
+
+    enum PaymentMethod {
+        Unspecified,
+        OverThePhone
     }
 }

@@ -86,6 +86,7 @@ describe("Customer Journeys", () => {
         await customer.reviewShoppingCart();
         await customer.verifyShoppingCartTitle();
         await customer.checkout();
+        await customer.decideToPayOverThePhone();
         const firstOrderNumber = await customer.verifyOrderIsConfirmed();
         await customer.verifyOrderContainsItems([
             { model: "Eicher Diesel 215/16", edition: "standard", price: "$58" }
@@ -100,6 +101,7 @@ describe("Customer Journeys", () => {
         await customer.switchToPlatinumEdition();
         await customer.buyDisplayedProduct();
         await customer.checkout();
+        await customer.decideToPayOverThePhone();
         const secondOrderNumber = await customer.verifyOrderIsConfirmed();
         expect(secondOrderNumber).not.toEqual(firstOrderNumber);
         await customer.verifyOrderContainsItems([
