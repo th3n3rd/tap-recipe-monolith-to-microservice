@@ -4,6 +4,8 @@ import static java.math.BigDecimal.ZERO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -29,14 +31,23 @@ class Order {
     @OrderBy(value = "productModel asc")
     private Set<OrderItem> items;
 
+    @Enumerated(EnumType.STRING)
+    private State state;
+
     private BigDecimal totalAmount;
 
     public Order(Set<OrderItem> items) {
         this.id = UUID.randomUUID();
+        this.state = State.Placed;
         this.items = items;
         this.totalAmount = ZERO;
         for (var item : items) {
             this.totalAmount = this.totalAmount.add(item.getProductPrice());
         }
+    }
+
+    enum State {
+        Unmanaged,
+        Placed
     }
 }

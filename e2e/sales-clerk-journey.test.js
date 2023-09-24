@@ -39,6 +39,7 @@ describe("Sales Clerk Journeys", () => {
         await salesClerk.reloadPage();
         await salesClerk.verifyOrdersListContains({
             orderNumber: orderNumber,
+            state: "Placed",
             totalAmount: "$58.00"
         });
     });

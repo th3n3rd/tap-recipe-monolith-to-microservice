@@ -45,9 +45,11 @@ export class SalesClerk {
             for (const item of items) {
                 const cells = await queries.findAllByRole(item,"cell", {}, waitForOptions);
                 const orderNumber = await cells[0].evaluate(element => element.textContent);
-                const totalAmount = await cells[1].evaluate(element => element.textContent);
+                const state = await cells[1].evaluate(element => element.textContent);
+                const totalAmount = await cells[2].evaluate(element => element.textContent);
                 orders.push({
                     orderNumber: orderNumber,
+                    state: state,
                     totalAmount: totalAmount,
                 });
             }

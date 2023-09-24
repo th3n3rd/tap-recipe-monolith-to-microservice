@@ -28,6 +28,7 @@
                     <thead>
                         <tr>
                             <th class="order-number">Order number</th>
+                            <th class="state">State</th>
                             <th class="total">Total amount</th>
                         </tr>
                     </thead>
@@ -35,6 +36,7 @@
                         {{#orders}}
                             <tr>
                                 <td class="order-number">{{id}}</td>
+                                <td class="state">{{state}}</td>
                                 <td class="total">${{totalAmount}}</td>
                             </tr>
                         {{/orders}}
