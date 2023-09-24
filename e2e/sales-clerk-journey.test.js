@@ -28,20 +28,18 @@ describe("Sales Clerk Journeys", () => {
     test("Inspects and reviews all the orders received", async () => {
         await salesClerk.takeOver();
         await salesClerk.verifyPageTitle(/The Tractor Store - Back Office/);
+        const previouslyKnownOrders = await salesClerk.inspectOrders();
 
         await customer.takeOver();
         await customer.emptyShoppingCartIfNotEmpty();
         await customer.buyDisplayedProduct();
         await customer.checkout();
-        const orderNumber = await customer.verifyOrderIsConfirmed();
 
         await salesClerk.takeOver();
         await salesClerk.reloadPage();
-        await salesClerk.verifyOrdersListContains({
-            orderNumber: orderNumber,
-            state: "Placed",
-            totalAmount: "$58.00"
-        });
+        await salesClerk.verifyNewlyAddedOrdersContain(previouslyKnownOrders, [
+            { state: "Placed", totalAmount: "$58.00" }
+        ]);
     });
 
 }, { timeout: 120_000 });

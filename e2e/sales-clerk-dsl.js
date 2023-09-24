@@ -37,13 +37,13 @@ export class SalesClerk {
         }
     }
 
-    async verifyOrdersListContains(expectedOrder) {
+    async inspectOrders() {
         try {
             const rows = await queries.findAllByRole(this.document, "row", {}, waitForOptions);
             const items = rows.slice(1); // remove the headers
             const orders = [];
             for (const item of items) {
-                const cells = await queries.findAllByRole(item,"cell", {}, waitForOptions);
+                const cells = await queries.findAllByRole(item, "cell", {}, waitForOptions);
                 const orderNumber = await cells[0].evaluate(element => element.textContent);
                 const state = await cells[1].evaluate(element => element.textContent);
                 const totalAmount = await cells[2].evaluate(element => element.textContent);
@@ -53,9 +53,28 @@ export class SalesClerk {
                     totalAmount: totalAmount,
                 });
             }
-            expect(orders).toContainEqual(expectedOrder);
+            return orders;
         } catch (error) {
-            Error.captureStackTrace(error, this.verifyOrdersListContains);
+            Error.captureStackTrace(error, this.inspectOrders);
+            throw error;
+        }
+    }
+
+    async figureOutNewlyAddedOrders(previouslyKnownOrders, currentOrders) {
+        const knownOrderNumbers = previouslyKnownOrders.map(order => order.orderNumber);
+        return currentOrders.filter(order => !knownOrderNumbers.includes(order.orderNumber))
+    }
+
+    async verifyNewlyAddedOrdersContain(previouslyKnownOrders, expectedOrders) {
+        try {
+            const allOrders = await this.inspectOrders();
+            const newlyAddedOrders = await this.figureOutNewlyAddedOrders(previouslyKnownOrders, allOrders);
+            expect(newlyAddedOrders).toHaveLength(expectedOrders.length);
+            expectedOrders.forEach(expected => {
+                expect(newlyAddedOrders).toContainEqual(expect.objectContaining(expected));
+            });
+        } catch (error) {
+            Error.captureStackTrace(error, this.verifyNewlyAddedOrdersContain);
             throw error;
         }
     }
