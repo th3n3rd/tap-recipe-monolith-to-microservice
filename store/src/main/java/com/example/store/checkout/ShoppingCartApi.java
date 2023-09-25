@@ -39,13 +39,13 @@ class ShoppingCartApi {
     @GetMapping(value = "/cart", produces = "text/fragment+html")
     String summary(Model model) {
         model.addAttribute("cart", shoppingCart);
-        return "checkout-minicart";
+        return "storefront/checkout-minicart";
     }
 
     @GetMapping(value = "/cart", produces = "text/html")
     String listItems(Model model) {
         model.addAttribute("cart", shoppingCart);
-        return "checkout-fullcart";
+        return "storefront/checkout-fullcart";
     }
 
     record AddItem(String productId, String edition) {}

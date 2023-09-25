@@ -20,7 +20,7 @@ class PricingApi {
             pricingBook.findByProductIdAndEdition(productId, edition).orElseThrow()
         );
         model.addAttribute("edition", edition);
-        return "checkout-buy";
+        return "storefront/checkout-buy";
     }
 
 }

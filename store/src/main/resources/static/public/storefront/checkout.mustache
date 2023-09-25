@@ -1,9 +1,9 @@
-{{> layout/header}}
+{{> storefront/layout/header}}
 {{^order.isPaymentMethodSpecified}}
-    {{> checkout-payment}}
+    {{> storefront/checkout-payment}}
 {{/order.isPaymentMethodSpecified}}
 {{#order.isPaymentMethodSpecified}}
-    {{> checkout-success}}
+    {{> storefront/checkout-success}}
 {{/order.isPaymentMethodSpecified}}
-{{> layout/footer}}
+{{> storefront/layout/footer}}
 

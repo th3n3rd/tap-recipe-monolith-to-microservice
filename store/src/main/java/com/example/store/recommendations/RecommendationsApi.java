@@ -15,7 +15,7 @@ class RecommendationsApi {
     @GetMapping(value = "/recommendations", produces = "text/fragment+html")
     String listProducts(@RequestParam String productId, Model model) {
         model.addAttribute("products", productsCatalogue.findAllByIdIsNot(productId));
-        return "recommendations";
+        return "storefront/recommendations";
     }
 
 }

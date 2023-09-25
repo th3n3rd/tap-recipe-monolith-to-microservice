@@ -36,7 +36,7 @@ class CheckoutApi {
     String inspectCheckout(@PathVariable UUID orderId, Model model) {
         var order = orders.findById(orderId).orElseThrow();
         model.addAttribute("order", order);
-        return "checkout";
+        return "storefront/checkout";
     }
 
     record SelectPaymentMethod(Order.PaymentMethod paymentMethod) {}
