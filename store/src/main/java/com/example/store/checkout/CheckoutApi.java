@@ -21,21 +21,7 @@ class CheckoutApi {
         var newOrder = shoppingCart.checkout();
         orders.save(newOrder);
         shoppingCart.empty();
-        return "redirect:/checkout/%s/payments".formatted(newOrder.getId());
-    }
-
-    @GetMapping(value = "/checkout/{orderId}/payments", produces = "text/fragment+html")
-    String paymentMethodsFragment(@PathVariable UUID orderId, Model model) {
-        var order = orders.findById(orderId).orElseThrow();
-        model.addAttribute("order", order);
-        return "checkout-payment";
-    }
-
-    @GetMapping(value ="/checkout/{orderId}/payments", produces = "text/html")
-    String paymentMethods(@PathVariable UUID orderId, Model model) {
-        var order = orders.findById(orderId).orElseThrow();
-        model.addAttribute("order", order);
-        return "checkout";
+        return "redirect:/checkout/%s".formatted(newOrder.getId());
     }
 
     @PostMapping("/checkout/{orderId}/payments")
@@ -46,18 +32,11 @@ class CheckoutApi {
         return "redirect:/checkout/%s".formatted(orderId);
     }
 
-    @GetMapping(value = "/checkout/{orderId}", produces = "text/html")
-    String completedCheckout(@PathVariable UUID orderId, Model model) {
+    @GetMapping(value = "/checkout/{orderId}")
+    String inspectCheckout(@PathVariable UUID orderId, Model model) {
         var order = orders.findById(orderId).orElseThrow();
         model.addAttribute("order", order);
         return "checkout";
-    }
-
-    @GetMapping(value = "/checkout/{orderId}", produces = "text/fragment+html")
-    String successfullyCompletedCheckout(@PathVariable UUID orderId, Model model) {
-        var order = orders.findById(orderId).orElseThrow();
-        model.addAttribute("order", order);
-        return "checkout-success";
     }
 
     record SelectPaymentMethod(Order.PaymentMethod paymentMethod) {}
