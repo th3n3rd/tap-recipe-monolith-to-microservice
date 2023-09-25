@@ -15,7 +15,12 @@ export async function openWebBrowser(debugEnabled = false) {
                 '--disable-features=DialMediaRouteProvider' // prevent the annoying macOS chrome popup!
             ]
         }
-        : { headless: true }
+        : {
+            headless: "new",
+            args: [
+                '--disable-features=DialMediaRouteProvider' // prevent the annoying macOS chrome popup!
+            ]
+        }
     return await puppeteer.launch(launchOptions);
 }
 
