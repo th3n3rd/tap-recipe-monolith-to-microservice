@@ -12,14 +12,20 @@
     <script src="https://unpkg.com/htmx.org@1.9.5"
             integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO"
             crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
     {{#liveReload}}
         <script src="http://localhost:35729/livereload.js"></script>
     {{/liveReload}}
 </head>
-<body class="store-layout">
+<body data-hx-ext="sse" data-sse-connect="/admin/sse" class="store-layout">
     <h1 class="store-header">The Tractor Store - Back Office</h1>
     <div id="store-content" data-hx-swap-oob="true">
-        <div class="orders">
+        <div class="orders"
+             id="orders"
+             data-hx-swap-oob="true"
+             data-hx-get="/admin/orders"
+             data-hx-trigger="sse:order-placed, sse:payment-method-selected"
+        >
             {{#orders.isEmpty}}
                 <p>There are no orders yet</p>
             {{/orders.isEmpty}}

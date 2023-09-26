@@ -2,6 +2,7 @@ package com.example.store.checkout;
 
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +16,14 @@ class CheckoutApi {
 
     private final ShoppingCart shoppingCart;
     private final Orders orders;
+    private final ApplicationEventPublisher eventPublisher;
 
     @PostMapping("/checkout")
     String startCheckout() {
         var newOrder = shoppingCart.checkout();
         orders.save(newOrder);
         shoppingCart.empty();
+        eventPublisher.publishEvent(new OrderPlaced(newOrder.getId()));
         return "redirect:/checkout/%s".formatted(newOrder.getId());
     }
 
@@ -29,6 +32,10 @@ class CheckoutApi {
         var order = orders.findById(orderId).orElseThrow();
         order.selectPaymentMethod(selectPaymentMethod.paymentMethod);
         orders.save(order);
+        eventPublisher.publishEvent(new PaymentMethodSelected(
+            order.getId(),
+            order.getPaymentMethod()
+        ));
         return "redirect:/checkout/%s".formatted(orderId);
     }
 
