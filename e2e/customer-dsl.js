@@ -56,25 +56,25 @@ export class Customer {
         }
     }
 
-    async verifiesStandardProductImage(product) {
+    async verifyStandardProductImage(product) {
         try {
             await queries.findByAltText(this.document, new RegExp(`^The standard edition version of the ${product}`), {}, waitForOptions);
         } catch (error) {
-            Error.captureStackTrace(error, this.verifiesStandardProductImage);
+            Error.captureStackTrace(error, this.verifyStandardProductImage);
             throw error;
         }
     }
 
-    async verifiesPlatinumProductImage(product) {
+    async verifyPlatinumProductImage(product) {
         try {
             await queries.findByAltText(this.document, new RegExp(`^The platinum edition version of the ${product}`), {}, waitForOptions);
         } catch (error) {
-            Error.captureStackTrace(error, this.verifiesPlatinumProductImage);
+            Error.captureStackTrace(error, this.verifyPlatinumProductImage);
             throw error;
         }
     }
 
-    async verifiesProductPrice(price) {
+    async verifyProductPrice(price) {
         try {
             await queries.findByText(this.document, new RegExp(`Buy for \\${price}`), {}, waitForOptions);
         } catch (error) {
@@ -149,11 +149,11 @@ export class Customer {
         }
     }
 
-    async verifiesShoppingCartTotals(total) {
+    async verifyShoppingCartTotals(total) {
         try {
             await queries.findByText(this.document, new RegExp(`for a total of \\${total}`), {}, waitForOptions);
         } catch (error) {
-            Error.captureStackTrace(error, this.verifiesShoppingCartTotals);
+            Error.captureStackTrace(error, this.verifyShoppingCartTotals);
             throw error;
         }
     }
@@ -177,14 +177,14 @@ export class Customer {
         }
     }
 
-    async verifiesRecommendations(products) {
+    async verifyRecommendations(products) {
         try {
             const recommendations = await queries.findByRole(this.document, "region", { name: /Recommendations/ }, waitForOptions);
             for (const product of products) {
                 await queries.findByAltText(recommendations, new RegExp(`^A recommendation for the standard edition version of the ${product}`), {}, waitForOptions);
             }
         } catch (error) {
-            Error.captureStackTrace(error, this.verifiesRecommendations);
+            Error.captureStackTrace(error, this.verifyRecommendations);
             throw error;
         }
     }

@@ -24,21 +24,21 @@ describe("Customer Journeys", () => {
     test("Inspects products and browses recommendations", async () => {
         await customer.verifyPageTitle(/The Tractor Store/);
         await customer.verifyProductTitle("Eicher Diesel 215/16");
-        await customer.verifiesStandardProductImage("Eicher Diesel 215/16");
-        await customer.verifiesProductPrice("$58");
-        await customer.verifiesRecommendations([
+        await customer.verifyStandardProductImage("Eicher Diesel 215/16");
+        await customer.verifyProductPrice("$58");
+        await customer.verifyRecommendations([
             "Fendt F20 Dieselroß",
             "Porsche-Diesel Master 419"
         ]);
 
         await customer.switchToPlatinumEdition();
-        await customer.verifiesPlatinumProductImage("Eicher Diesel 215/16");
+        await customer.verifyPlatinumProductImage("Eicher Diesel 215/16");
 
         await customer.selectRecommendedProduct("Porsche-Diesel Master 419")
         await customer.verifyProductTitle("Porsche-Diesel Master 419");
-        await customer.verifiesStandardProductImage("Porsche-Diesel Master 419");
-        await customer.verifiesProductPrice("$66");
-        await customer.verifiesRecommendations([
+        await customer.verifyStandardProductImage("Porsche-Diesel Master 419");
+        await customer.verifyProductPrice("$66");
+        await customer.verifyRecommendations([
             "Fendt F20 Dieselroß",
             "Eicher Diesel 215/16"
         ]);
@@ -53,13 +53,13 @@ describe("Customer Journeys", () => {
 
         await customer.buyDisplayedProduct();
         await customer.verifyShoppingCartContains(1);
-        await customer.verifiesShoppingCartTotals("$58");
+        await customer.verifyShoppingCartTotals("$58");
         await customer.reviewShoppingCart();
         await customer.verifyShoppingCartTitle();
         await customer.verifyShoppingCartContainsItems([
             { model: "Eicher Diesel 215/16", edition: "standard", price: "$58" },
         ]);
-        await customer.verifiesShoppingCartTotals("$58");
+        await customer.verifyShoppingCartTotals("$58");
         await customer.continueShopping();
         await customer.emptyShoppingCart();
         await customer.verifyShoppingCartIsEmpty();
@@ -69,14 +69,14 @@ describe("Customer Journeys", () => {
         await customer.switchToPlatinumEdition();
         await customer.buyDisplayedProduct();
         await customer.verifyShoppingCartContains(2);
-        await customer.verifiesShoppingCartTotals("$1024");
+        await customer.verifyShoppingCartTotals("$1024");
 
         await customer.reviewShoppingCart();
         await customer.verifyShoppingCartContainsItems([
             { model: "Eicher Diesel 215/16", edition: "standard", price: "$58" },
             { model: "Porsche-Diesel Master 419", edition: "platinum", price: "$966" },
         ]);
-        await customer.verifiesShoppingCartTotals("$1024");
+        await customer.verifyShoppingCartTotals("$1024");
     });
 
     test("Goes through the checkout process", async () => {
