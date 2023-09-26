@@ -39,7 +39,7 @@ export class SalesClerk {
 
     async inspectOrders() {
         try {
-            const rows = await queries.findAllByRole(this.document, "row", {}, waitForOptions);
+            const rows = await queries.queryAllByRole(this.document, "row", {});
             const items = rows.slice(1); // remove the headers
             const orders = [];
             for (const item of items) {
