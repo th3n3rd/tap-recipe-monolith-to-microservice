@@ -1,6 +1,5 @@
-package com.example.store;
+package com.example.store.common;
 
-import com.example.store.common.DomainEvent;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.springframework.context.event.EventListener;
@@ -9,11 +8,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Component
-class ServerSideEvents {
+public class ServerSideEvents {
     public static final SseEmitter.SseEventBuilder Heartbeat = SseEmitter.event().comment("heartbeat");
     private final List<SseEmitter> consumers = new CopyOnWriteArrayList<>();
 
-    SseEmitter newConsumer() {
+    public SseEmitter newConsumer() {
         var consumer = new SseEmitter(120_000L);
         consumers.add(consumer);
         consumer.onCompletion(() -> consumers.remove(consumer));
