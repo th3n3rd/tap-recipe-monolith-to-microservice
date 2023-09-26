@@ -1,5 +1,5 @@
 <div id="checkout-summary"
-     data-hx-trigger="cart-updated from:body"
+     data-hx-trigger="sse:item-added-to-cart, sse:cart-cleared"
      data-hx-get="/cart"
      data-hx-headers='{ "Accept": "text/fragment+html" }'
      data-hx-swap-oob="true"

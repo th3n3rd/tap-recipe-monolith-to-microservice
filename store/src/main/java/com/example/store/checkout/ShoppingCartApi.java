@@ -1,6 +1,8 @@
 package com.example.store.checkout;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RequiredArgsConstructor
 @Controller
@@ -16,24 +19,27 @@ class ShoppingCartApi {
     private final ShoppingCart shoppingCart;
     private final PricingBook pricingBook;
     private final PurchasableProductsCatalogue productsCatalogue;
+    private final ApplicationEventPublisher eventPublisher;
 
     @PostMapping(value = "/cart")
-    ResponseEntity<?> addItem(@ModelAttribute AddItem addItem) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void addItem(@ModelAttribute AddItem addItem) {
         var pricing = pricingBook.findByProductIdAndEdition(addItem.productId(), addItem.edition()).orElseThrow();
         var product = productsCatalogue.findById(addItem.productId()).orElseThrow();
-        shoppingCart.add(new ShoppingCart.Item(
-            pricing.getProductId(),
+        var item = new ShoppingCart.Item(pricing.getProductId(),
             product.getModel(),
             pricing.getEdition(),
-            pricing.getPrice())
+            pricing.getPrice()
         );
-        return event("item-added-to-cart");
+        shoppingCart.add(item);
+        eventPublisher.publishEvent(new ItemAddedToCart(item));
     }
 
     @DeleteMapping("/cart")
-    ResponseEntity<?> clear() {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void clear() {
         shoppingCart.empty();
-        return event("cart-cleared");
+        eventPublisher.publishEvent(new CartCleared());
     }
 
     @GetMapping(value = "/cart", produces = "text/fragment+html")
@@ -50,10 +56,4 @@ class ShoppingCartApi {
 
     record AddItem(String productId, String edition) {}
 
-    private ResponseEntity<Object> event(String event) {
-        return ResponseEntity
-            .noContent()
-            .header("HX-Trigger", "cart-updated", event)
-            .build();
-    }
 }
