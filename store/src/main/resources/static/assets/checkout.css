@@ -219,11 +219,16 @@
 }
 
 .orders {
-    min-width: 42rem;
+    min-width: 52rem;
 }
 
 .orders table {
+    border-collapse: collapse;
     width: 100%;
+}
+
+.orders table th, .orders table td {
+    padding: 10px 0;
 }
 
 .orders table .total {
@@ -240,4 +245,32 @@
 
 .orders table .payment-method {
     text-align: center;
+}
+
+.orders table .actions {
+    min-width: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.order-mark-as-paid button {
+    padding: 0.4em;
+    font-size: 0.8em;
+    border: none;
+    color: white;
+    border-radius: 0.25em;
+    background: rgb(227, 38, 38);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+}
+
+.order-mark-as-paid button:hover {
+    background: rgb(225, 72, 72);
+}
+
+.order-mark-as-paid button:active {
+    background: gray;
+    transform: scale(0.98);
 }

@@ -81,4 +81,29 @@ export class SalesClerk {
         }
     }
 
+    async markNewlyAddedOrdersAdPaid(previouslyKnownOrders) {
+        try {
+            const allOrders = await this.inspectOrders();
+            const newlyAddedOrders = await this.figureOutNewlyAddedOrders(previouslyKnownOrders, allOrders);
+            for (const newOrder of newlyAddedOrders) {
+                const row = await queries.findByRole(this.document, "row", { name: new RegExp(newOrder.orderNumber) }, waitForOptions);
+                const markAsPaid = await queries.findByRole(row, "button", { name: /Mark as paid/ });
+                await this.htmxSafeClick(markAsPaid);
+            }
+        } catch (error) {
+            Error.captureStackTrace(error, this.markNewlyAddedOrdersAdPaid);
+            throw error;
+        }
+    }
+
+    waitForHtmxToSettle() {
+        // htmx by default uses 20ms in order to settle the new attributes on inserted elements
+        // this seems to affect buttons/clicks that might happen right after insertion
+        return new Promise(resolve => setTimeout(resolve, 50));
+    }
+
+    async htmxSafeClick(element) {
+        await this.waitForHtmxToSettle();
+        await element.click();
+    }
 }

@@ -58,9 +58,18 @@ class Order {
         return !paymentMethod.equals(PaymentMethod.Unspecified);
     }
 
+    public void markAs(State state) {
+        this.state = state;
+    }
+
+    public boolean isPaid() {
+        return this.state.equals(State.Paid);
+    }
+
     enum State {
         Unmanaged,
-        Placed
+        Placed,
+        Paid
     }
 
     enum PaymentMethod {

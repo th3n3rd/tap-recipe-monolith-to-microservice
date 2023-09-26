@@ -1,4 +1,4 @@
-import { openWebBrowser, visitPage } from "./test-utils.js";
+import { openWebBrowser } from "./test-utils.js";
 import { afterAll, beforeAll, beforeEach, describe, test, expect } from "vitest";
 import { Customer } from "./customer-dsl.js";
 import { SalesClerk } from "./sales-clerk-dsl.js";
@@ -46,6 +46,11 @@ describe("Sales Clerk Journeys", () => {
         await salesClerk.takeOver();
         await salesClerk.verifyNewlyAddedOrdersContain(previouslyKnownOrders, [
             { state: "Placed", totalAmount: "$58.00", paymentMethod: "OverThePhone" }
+        ]);
+
+        await salesClerk.markNewlyAddedOrdersAdPaid(previouslyKnownOrders);
+        await salesClerk.verifyNewlyAddedOrdersContain(previouslyKnownOrders, [
+            { state: "Paid", totalAmount: "$58.00", paymentMethod: "OverThePhone" }
         ]);
     });
 
