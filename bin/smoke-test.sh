@@ -11,13 +11,10 @@ for arg in "$@"
 do
     if [ "$arg" == "--debug" ]; then
         DEBUG_MODE="true"
-        break
     elif [ "$arg" == "--customer-only" ]; then
         JOURNEY=":customer"
-        break
     elif [ "$arg" == "--sales-clerk-only" ]; then
         JOURNEY=":sales-clerk"
-        break
     fi
 done
 
