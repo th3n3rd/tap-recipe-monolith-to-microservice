@@ -3,12 +3,16 @@ package com.example.store.checkout;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RequiredArgsConstructor
 @Controller
@@ -27,16 +31,16 @@ class CheckoutApi {
         return "redirect:/checkout/%s".formatted(newOrder.getId());
     }
 
-    @PostMapping("/checkout/{orderId}/payments")
-    String selectPaymentMethod(@PathVariable UUID orderId, @ModelAttribute SelectPaymentMethod selectPaymentMethod) {
+    @PatchMapping("/checkout/{orderId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void selectPaymentMethod(@PathVariable UUID orderId, @RequestParam Order.PaymentMethod paymentMethod) {
         var order = orders.findById(orderId).orElseThrow();
-        order.selectPaymentMethod(selectPaymentMethod.paymentMethod);
+        order.selectPaymentMethod(paymentMethod);
         orders.save(order);
         eventPublisher.publishEvent(new PaymentMethodSelected(
             order.getId(),
             order.getPaymentMethod()
         ));
-        return "redirect:/checkout/%s".formatted(orderId);
     }
 
     @GetMapping(value = "/checkout/{orderId}")
@@ -46,5 +50,4 @@ class CheckoutApi {
         return "storefront/checkout";
     }
 
-    record SelectPaymentMethod(Order.PaymentMethod paymentMethod) {}
 }

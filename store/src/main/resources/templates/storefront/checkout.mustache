@@ -1,9 +1,15 @@
 {{> storefront/layout/header}}
-{{^order.isPaymentMethodSpecified}}
-    {{> storefront/checkout-payment}}
-{{/order.isPaymentMethodSpecified}}
-{{#order.isPaymentMethodSpecified}}
-    {{> storefront/checkout-success}}
-{{/order.isPaymentMethodSpecified}}
+<div id="checkout-flow"
+     hx-get="/checkout/{{order.id}}"
+     hx-trigger="sse:payment-method-selected"
+     data-hx-swap-oob="true"
+>
+    {{^order.isPaymentMethodSpecified}}
+        {{> storefront/checkout-payment}}
+    {{/order.isPaymentMethodSpecified}}
+    {{#order.isPaymentMethodSpecified}}
+        {{> storefront/checkout-success}}
+    {{/order.isPaymentMethodSpecified}}
+</div>
 {{> storefront/layout/footer}}
 

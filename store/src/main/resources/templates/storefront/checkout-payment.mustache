@@ -1,10 +1,8 @@
 <div class="checkout-payment">
     <p>How do you prefer to pay?</p>
     <form
-        data-hx-post="/checkout/{{order.id}}/payments"
+        data-hx-patch="/checkout/{{order.id}}"
         data-hx-trigger="submit"
-        data-hx-target="#store-content"
-        data-hx-push-url="true"
     >
         <div class="payment-methods">
             <input checked="checked" type="radio" name="paymentMethod" id="over-the-phone" value="OverThePhone">
