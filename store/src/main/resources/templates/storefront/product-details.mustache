@@ -1,14 +1,37 @@
-<aside id="product" data-hx-swap-oob="true">
-    {{> storefront/product-header }}
-    {{> storefront/product-options }}
-    <div
-        id="recommendations"
-        data-hx-trigger="load delay:1s"
-        data-hx-get="/recommendations"
-        data-hx-vals='{ "productId": "{{details.productId}}" }'
-        data-hx-headers='{ "Accept": "text/fragment+html" }'
-        data-hx-swap="outerHTML"
-    >{{> storefront/spinner}}</div>
+<aside id="product" class="container" data-hx-swap-oob="true">
+    <div class="row">
+        <div class="col-6 position-relative">
+            {{> storefront/product-header }}
+            <div class="item-added-to-cart invisible position-absolute top-50 start-50">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-check-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zm-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                </svg>
+            </div>
+        </div>
+        <div class="col-3">
+            {{> storefront/product-options }}
+        </div>
+        <div class="col-3">
+            <div
+                id="recommendations"
+                data-hx-trigger="load delay:1s"
+                data-hx-get="/recommendations"
+                data-hx-vals='{ "productId": "{{details.productId}}" }'
+                data-hx-headers='{ "Accept": "text/fragment+html" }'
+                data-hx-swap="outerHTML"
+            >
+                <div class="placeholder-glow">
+                    <h2>
+                        <span class="placeholder col-12"></span>
+                    </h2>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="ratio ratio-1x1 w-100 bg-secondary placeholder" aria-hidden="true"></div>
+                        <div class="ratio ratio-1x1 w-100 bg-secondary placeholder" aria-hidden="true"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         (function () {
             const itemAddedToCartEvent = "item-added-to-cart";

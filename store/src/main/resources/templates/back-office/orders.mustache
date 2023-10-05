@@ -6,9 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>The Tractor Store - Back Office</title>
-    <link href="/assets/store.css" rel="stylesheet"/>
-    <link href="/assets/checkout.css" rel="stylesheet"/>
-    <link href="/assets/outlines.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="/assets/outlines.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/htmx.org@1.9.5"
             integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO"
             crossorigin="anonymous"></script>
@@ -17,56 +17,72 @@
         <script src="http://localhost:35729/livereload.js"></script>
     {{/liveReload}}
 </head>
-<body data-hx-ext="sse" data-sse-connect="/admin/sse" class="store-layout">
-    <h1 class="store-header">The Tractor Store - Back Office</h1>
-    <div id="store-content" data-hx-swap-oob="true">
-        <div class="orders"
-             id="orders"
-             data-hx-swap-oob="true"
-             data-hx-get="/admin/orders"
-             data-hx-trigger="sse:order-placed, sse:payment-method-selected, sse:order-paid"
-        >
-            {{#orders.isEmpty}}
-                <p>There are no orders yet</p>
-            {{/orders.isEmpty}}
-            {{^orders.isEmpty}}
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="order-number">Order number</th>
-                            <th class="state">State</th>
-                            <th class="payment-method">Payment Method</th>
-                            <th class="total">Total amount</th>
-                            <th class="actions"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#orders}}
-                            <tr>
-                                <td class="order-number">{{id}}</td>
-                                <td class="state">{{state}}</td>
-                                <td class="payment-method">{{paymentMethod}}</td>
-                                <td class="total">${{totalAmount}}</td>
-                                <td class="actions">
-                                    {{#isPaymentMethodSpecified}}
-                                        {{^isPaid}}
-                                            <form
-                                                hx-patch="/admin/orders/{{id}}"
-                                                data-hx-trigger="submit"
-                                            >
-                                                <input type="hidden" name="state" value="Paid">
-                                                <div class="order-mark-as-paid">
-                                                    <button type="submit">Mark as paid</button>
-                                                </div>
-                                            </form>
-                                        {{/isPaid}}
-                                    {{/isPaymentMethodSpecified}}
-                                </td>
-                            </tr>
-                        {{/orders}}
-                    </tbody>
-                </table>
-            {{/orders.isEmpty}}
+<body class="container text-center" data-hx-ext="sse" data-sse-connect="/admin/sse">
+    <div class="row">
+        <div class="col">
+            <h1 class="border-3 border-top border-bottom my-4 py-2">The Tractor Store - Back Office</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div id="store-content" data-hx-swap-oob="true">
+                <div id="orders"
+                     data-hx-swap-oob="true"
+                     data-hx-get="/admin/orders"
+                     data-hx-trigger="sse:order-placed, sse:payment-method-selected, sse:order-paid"
+                >
+                    {{#orders.isEmpty}}
+                        <p>There are no orders yet</p>
+                    {{/orders.isEmpty}}
+                    {{^orders.isEmpty}}
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <h2>Orders received</h2>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-8">
+                                    <table class="table table-borderless align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th class="order-number">Order number</th>
+                                                <th>State</th>
+                                                <th>Payment Method</th>
+                                                <th class="text-end">Total amount</th>
+                                                <th class="actions"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#orders}}
+                                                <tr>
+                                                    <td class="order-number {{#isPaid}}text-decoration-line-through{{/isPaid}}">{{id}}</td>
+                                                    <td>{{state}}</td>
+                                                    <td>{{paymentMethod}}</td>
+                                                    <td class="text-end">${{totalAmount}}</td>
+                                                    <td class="col-2">
+                                                        {{#isPaymentMethodSpecified}}
+                                                            {{^isPaid}}
+                                                                <form
+                                                                    hx-patch="/admin/orders/{{id}}"
+                                                                    data-hx-trigger="submit"
+                                                                >
+                                                                    <input type="hidden" name="state" value="Paid">
+                                                                    <button class="btn btn-outline-danger" type="submit">Mark as paid</button>
+                                                                </form>
+                                                            {{/isPaid}}
+                                                        {{/isPaymentMethodSpecified}}
+                                                    </td>
+                                                </tr>
+                                            {{/orders}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    {{/orders.isEmpty}}
+                </div>
+            </div>
         </div>
     </div>
 </body>

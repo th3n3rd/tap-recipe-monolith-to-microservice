@@ -1,38 +1,36 @@
-<div id="checkout-summary"
+<div id="checkout-minicart"
+     class="p-2"
      data-hx-trigger="sse:item-added-to-cart, sse:cart-cleared"
      data-hx-get="/cart"
      data-hx-headers='{ "Accept": "text/fragment+html" }'
      data-hx-swap-oob="true"
 >
-    <div class="checkout-minicart">
+    <div class="d-flex justify-content-center align-items-center gap-3">
         {{#cart.isEmpty}}
-            <p>Your cart is empty</p>
+            <span>Your cart is empty</span>
         {{/cart.isEmpty}}
         {{^cart.isEmpty}}
-            <p>You've picked {{cart.size}} items, for a total of ${{cart.total}}</p>
-            <form class="checkout-clear">
-                <button
-                    data-hx-delete="/cart"
-                    data-hx-trigger="click"
-                    type="button"
-                >Empty cart</button>
+            <span>You've picked {{cart.size}} items, for a total of ${{cart.total}}</span>
+            <form data-hx-delete="/cart"
+                  data-hx-trigger="submit"
+            >
+                <button class="btn btn-outline-danger" type="submit">Empty cart</button>
             </form>
-            <div class="checkout-review">
-                <button
-                    data-hx-get="/cart"
-                    data-hx-trigger="click"
-                    data-hx-push-url="true"
-                    data-hx-headers='{ "Accept": "text/html" }'
-                    type="button"
-                >View cart</button>
-            </div>
+            <button
+                class="btn btn-outline-info"
+                data-hx-get="/cart"
+                data-hx-trigger="click"
+                data-hx-push-url="true"
+                data-hx-headers='{ "Accept": "text/html" }'
+                type="button"
+            >View cart</button>
             <form class="checkout-start"
                   data-hx-post="/checkout"
-                  data-hx-trigger="click"
+                  data-hx-trigger="submit"
                   data-hx-target="#store-content"
                   data-hx-push-url="true"
             >
-                <button type="button">Checkout</button>
+                <button class="btn btn-outline-primary" type="submit">Checkout</button>
             </form>
         {{/cart.isEmpty}}
     </div>

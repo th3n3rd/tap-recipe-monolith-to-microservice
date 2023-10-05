@@ -1,11 +1,9 @@
 <div id="checkout-buy" data-hx-swap-oob="true">
-    <form>
+    <form data-hx-post="/cart"
+          data-hx-trigger="submit"
+    >
         <input type="hidden" name="productId" value="{{pricing.productId}}">
         <input type="hidden" name="edition" value="{{edition}}">
-        <button
-            data-hx-post="/cart"
-            data-hx-trigger="click"
-            type="button"
-        >Buy for ${{pricing.price}}</button>
+        <button class="btn btn-primary btn-lg" type="submit">Buy for ${{pricing.price}}</button>
     </form>
 </div>

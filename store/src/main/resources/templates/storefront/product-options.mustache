@@ -1,23 +1,37 @@
-<div class="product-options">
-    <label class="product-editions">
-        <p>Material Upgrade?</p>
-        <input
-            data-hx-get="/products/{{details.productId}}"
-            data-hx-vals='{ "edition": "{{details.otherEdition}}" }'
-            data-hx-headers='{ "Accept": "text/fragment+html" }'
-            data-hx-push-url="true"
-            {{#details.isPlatinum}}checked{{/details.isPlatinum}}
-            type="checkbox"/>
-        <span aria-label="Platinum Edition">Platinum<br/>Edition</span>
-        <img class="product-image-platinum"
-             alt="Preview of the platinum edition version of the {{details.model}} tractor"
-             src="{{details.platinumImageUrl}}"/>
-    </label>
+<div id="product-options" class="h-100 d-flex flex-column justify-content-center">
+    <form
+        data-hx-get="/products/{{details.productId}}"
+        data-hx-vals='{ "edition": "{{details.otherEdition}}" }'
+        data-hx-headers='{ "Accept": "text/fragment+html" }'
+        data-hx-trigger="change"
+        data-hx-push-url="true"
+    >
+        <fieldset>
+            <legend>Material Upgrade?</legend>
+            <div class="form-check">
+                <input
+                    id="product-edition"
+                    class="form-check-input float-none"
+                    {{#details.isPlatinum}}checked{{/details.isPlatinum}}
+                    type="checkbox"/>
+                <label for="product-edition" class="form-check-label">
+                    <span>Platinum Edition</span>
+                    <img class="img-thumbnail border-0"
+                         alt="Preview of the platinum edition version of the {{details.model}} tractor"
+                         src="{{details.platinumImageUrl}}"/>
+                </label>
+            </div>
+        </fieldset>
+    </form>
     <div
         id="checkout-buy"
         data-hx-trigger="load delay:1s"
         data-hx-get="/pricing/{{details.productId}}"
         data-hx-vals='{ "edition": "{{details.edition}}" }'
         data-hx-headers='{ "Accept": "text/fragment+html" }'
-    >{{> storefront/spinner}}</div>
+    >
+        <div class="placeholder-glow">
+            <a class="btn btn-primary btn-large disabled placeholder col-6" aria-disabled="true"></a>
+        </div>
+    </div>
 </div>

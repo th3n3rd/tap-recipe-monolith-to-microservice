@@ -1,13 +1,14 @@
 <aside id="recommendations" role="region" aria-label="Recommendations">
-    <h2 class="recommendations-headline">Recommendations</h2>
-    {{#products}}
-        <div class="recommendation">
-            <div data-hx-get="/products/{{id}}"
-                 data-hx-push-url="true"
-                 data-hx-headers='{ "Accept": "text/fragment+html" }'
-                 data-hx-trigger="click"
-            ><img alt="A recommendation for the standard edition version of the {{model}} tractor" src="{{imageUrl}}"/>
-            </div>
-        </div>
-    {{/products}}
+    <h2>Recommendations</h2>
+    <div class="d-flex flex-column gap-3">
+        {{#products}}
+            <a data-hx-get="/products/{{id}}"
+               data-hx-push-url="true"
+               data-hx-headers='{ "Accept": "text/fragment+html" }'
+               data-hx-trigger="click"
+            >
+                <img class="img-thumbnail" alt="A recommendation for the standard edition version of the {{model}} tractor" src="{{imageUrl}}"/>
+            </a>
+        {{/products}}
+    </div>
 </aside>

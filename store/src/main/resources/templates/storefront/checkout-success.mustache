@@ -1,32 +1,42 @@
-<div class="checkout-success">
-    <div class="check-mark">✔</div>
-    <p>Your order is confirmed!</p>
-    <div class="checkout-receipt">
-        <p>Order number: <span data-testid="order-number">{{order.id}}</span></p>
-        <table>
-            <thead>
-                <tr>
-                    <th class="model">Product</th>
-                    <th class="edition">Edition</th>
-                    <th class="price">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#order.items}}
-                    <tr>
-                        <td class="model">{{productModel}}</td>
-                        <td class="edition">{{productEdition}}</td>
-                        <td class="price">${{productPrice}}</td>
-                    </tr>
-                {{/order.items}}
-                <tr>
-                    <td colspan="3" class="total price">Total amount ${{order.totalAmount}}</td>
-                </tr>
-            </tbody>
-        </table>
+<div id="checkout-success">
+    <div class="check-mark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
+            <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+            <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+        </svg>
     </div>
-    <div class="checkout-continue-shopping">
+    <p class="lead">Your order is confirmed!</p>
+    <p>Order number: <mark data-testid="order-number">{{order.id}}</mark></p>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th class="text-start">Product</th>
+                            <th class="edition">Edition</th>
+                            <th class="text-end">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#order.items}}
+                            <tr>
+                                <td class="text-start">{{productModel}}</td>
+                                <td class="edition">{{productEdition}}</td>
+                                <td class="text-end">${{productPrice}}</td>
+                            </tr>
+                        {{/order.items}}
+                        <tr class="border-top">
+                            <td colspan="3" class="text-end">Total amount ${{order.totalAmount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex gap-3 justify-content-center">
         <button
+            class="btn btn-primary"
             data-hx-get="/"
             data-hx-push-url="true"
             data-hx-trigger="click"

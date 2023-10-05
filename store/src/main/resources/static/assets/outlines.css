@@ -1,7 +1,11 @@
 html {
+  font-family: var(--bs-body-font-family);
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--bs-body-font-weight);
   outline: 3px solid #bc3630;
   outline-offset: -10px;
   position: relative;
+  padding-bottom: 50px;
 }
 
 html::after {
@@ -18,22 +22,23 @@ html::after {
 #product {
   position: relative;
   outline: 3px solid #c8845f;
-  outline-offset: 40px;
+  outline-offset: 24px;
 }
 
-#product::before {
+#product::after {
   display: block;
   background-color: #c8845f;
   color: white;
   position: absolute;
   padding: 2px 5px;
   content: "Products";
-  bottom: -40px;
-  left: -40px;
+  bottom: -24px;
+  left: -24px;
+  z-index: 99;
 }
 
 #checkout-buy,
-#checkout-summary {
+#checkout-minicart {
   position: relative;
   outline: 3px solid #5f9dc8;
 }
@@ -42,45 +47,78 @@ html::after {
   outline-offset: 5px;
 }
 
-#checkout-buy::before,
-#checkout-summary::before {
+#checkout-buy::after,
+#checkout-minicart::after {
   display: block;
   background-color: #5f9dc8;
   color: white;
   position: absolute;
   padding: 2px 5px;
+  content: "Checkout";
+  z-index: 99;
 }
 
-#checkout-summary::before {
-  content: "Checkout";
-}
-
-#checkout-buy::before {
-  content: "Checkout";
+#checkout-buy::after {
   bottom: -34px;
   right: -8px;
 }
 
-#checkout-summary::before {
+#checkout-minicart::after {
   bottom: -30px;
   right: -3px;
 }
 
-.checkout-success {
+#checkout-fullcart {
   position: relative;
   outline: 3px solid #5f9dc8;
-  outline-offset: 12px;
+  outline-offset: 8px;
 }
 
-.checkout-success::after {
+#checkout-fullcart::after {
+  display: block;
+  background-color: #5f9dc8;
+  color: white;
+  position: absolute;
+  padding: 2px 5px;
+  content: "Checkout";
+  z-index: 99;
+  bottom: -38px;
+  right: -10px;
+}
+
+#checkout-payment {
+  position: relative;
+  outline: 3px solid #5f9dc8;
+  outline-offset: 8px;
+}
+
+#checkout-payment::after {
+  display: block;
+  background-color: #5f9dc8;
+  color: white;
+  position: absolute;
+  padding: 2px 5px;
+  content: "Checkout";
+  z-index: 99;
+  bottom: -38px;
+  right: -10px;
+}
+
+#checkout-success {
+  position: relative;
+  outline: 3px solid #5f9dc8;
+  outline-offset: 8px;
+}
+
+#checkout-success::after {
   content: "Checkout";
   display: block;
   background-color: #5f9dc8;
   color: white;
   position: absolute;
   padding: 2px 5px;
-  bottom: -41px;
-  right: -15px;
+  bottom: -38px;
+  right: -10px;
 }
 
 #recommendations {
@@ -88,7 +126,7 @@ html::after {
   outline: 3px solid #7c9b2f;
 }
 
-#recommendations::before {
+#recommendations::after {
   content: "Recommendations";
   display: block;
   background-color: #7c9b2f;
@@ -97,4 +135,21 @@ html::after {
   padding: 2px 5px;
   bottom: -30px;
   right: -3px;
+}
+
+#orders {
+  position: relative;
+  outline: 3px solid #5f9dc8;
+  outline-offset: 8px;
+}
+
+#orders::after {
+  content: "Checkout";
+  display: block;
+  background-color: #5f9dc8;
+  color: white;
+  position: absolute;
+  padding: 2px 5px;
+  bottom: -38px;
+  right: -10px;
 }

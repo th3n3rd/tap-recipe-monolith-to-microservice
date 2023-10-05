@@ -1,16 +1,17 @@
-<div class="checkout-payment">
-    <p>How do you prefer to pay?</p>
+<div id="checkout-payment">
     <form
         data-hx-patch="/checkout/{{order.id}}"
         data-hx-trigger="submit"
     >
-        <div class="payment-methods">
-            <input checked="checked" type="radio" name="paymentMethod" id="over-the-phone" value="OverThePhone">
-            <label for="over-the-phone">Pay over the phone</label>
-        </div>
-
-        <div class="checkout-continue">
-            <button type="submit">Continue</button>
-        </div>
+        <fieldset class="d-flex flex-column gap-3">
+            <legend>How do you prefer to pay?</legend>
+            <div>
+                <input class="form-check-input2" checked="checked" type="radio" name="paymentMethod" id="over-the-phone" value="OverThePhone">
+                <label class="form-check-label2" for="over-the-phone">Pay over the phone</label>
+            </div>
+            <div>
+                <button class="btn btn-primary" type="submit">Continue</button>
+            </div>
+        </fieldset>
     </form>
 </div>
