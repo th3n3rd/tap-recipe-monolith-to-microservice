@@ -1,5 +1,5 @@
 import { Customer } from "./customer-dsl.js";
-import { openWebBrowser, reloadPage, visitPage } from "./test-utils.js";
+import { openWebBrowser } from "./test-utils.js";
 import { afterAll, beforeAll, beforeEach, describe, expect, test } from "vitest";
 
 describe("Customer Journeys", () => {
