@@ -34,23 +34,27 @@
     </div>
     <script>
         (function () {
+            const events = new EventSource("/sse");
             const itemAddedToCartEvent = "item-added-to-cart";
             const animationEndEvent = "animationend";
-            const header = document.querySelector(".product-header");
+            const beforeCleanupElementEvent = "htmx:beforeCleanupElement";
+            const checkMark = document.querySelector(".item-added-to-cart");
 
             function onItemAddedToCart() {
-                header.classList.add("product-added-to-cart");
+                checkMark.classList.remove("invisible");
+                checkMark.classList.add("animated");
             }
 
             function onAnimationEnd() {
-                header.classList.remove("product-added-to-cart");
+                checkMark.classList.add("invisible");
+                checkMark.classList.remove("animated");
             }
 
-            document.addEventListener(itemAddedToCartEvent, onItemAddedToCart);
-            header.addEventListener(animationEndEvent, onAnimationEnd);
-            header.addEventListener("htmx:beforeCleanupElement", function () {
-                document.removeEventListener(itemAddedToCartEvent, onItemAddedToCart);
-                header.removeEventListener(animationEndEvent, onAnimationEnd);
+            events.addEventListener(itemAddedToCartEvent, onItemAddedToCart);
+            checkMark.addEventListener(animationEndEvent, onAnimationEnd);
+            checkMark.addEventListener(beforeCleanupElementEvent, function () {
+                checkMark.removeEventListener(animationEndEvent, onAnimationEnd);
+                events.close();
             });
         })();
     </script>
